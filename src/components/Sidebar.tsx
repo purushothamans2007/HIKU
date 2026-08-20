@@ -1,44 +1,68 @@
 import React from 'react';
+import { 
+  Map, 
+  AlertTriangle, 
+  Wrench, 
+  BarChart3, 
+  Droplets,
+  PlusCircle, 
+  HelpCircle, 
+  Sparkles,
+  ShieldCheck
+} from 'lucide-react';
 import { ScreenType } from '../types';
-import { Map, AlertTriangle, Wrench, BarChart3, Plus, HelpCircle, LogOut, Lightbulb } from 'lucide-react';
 
 interface SidebarProps {
   currentScreen: ScreenType;
   onNavigate: (screen: ScreenType) => void;
   openFaultCount: number;
-  onLogout: () => void;
-  onOpenSupport: () => void;
+  onOpenHelp: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
   currentScreen,
   onNavigate,
   openFaultCount,
-  onLogout,
-  onOpenSupport
+  onOpenHelp
 }) => {
   return (
-    <aside className="fixed left-0 top-0 h-full w-64 z-50 bg-[#0e1019]/65 backdrop-blur-3xl border-r border-white/12 shadow-[0_20px_50px_rgba(0,0,0,0.65)] hidden lg:flex flex-col">
-      {/* Branding */}
-      <div className="px-6 pt-7 pb-6 flex flex-col items-center border-b border-white/10 relative">
-        <div className="w-14 h-14 rounded-2xl frosted-card flex items-center justify-center mb-3 shadow-lg group hover:scale-105 transition-transform border border-white/20">
-          <Lightbulb className="w-7 h-7 text-[#4b8eff] drop-shadow-[0_0_12px_rgba(75,142,255,0.8)] animate-pulse" />
+    <aside className="hidden lg:flex flex-col fixed left-0 top-0 bottom-0 w-64 frosted-ultra z-[70] border-r border-white/25">
+      {/* Brand Header with Crystal Liquid Droplets */}
+      <div className="h-16 flex items-center px-6 border-b border-white/20">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-300 to-white flex items-center justify-center shadow-[0_4px_20px_rgba(52,211,153,0.5)] border border-white/80">
+            <Droplets className="w-5 h-5 text-slate-950" />
+          </div>
+          <div>
+            <div className="flex items-center gap-1.5">
+              <span className="font-extrabold text-xl text-white tracking-tight">
+                hiku
+              </span>
+              <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-white/20 text-white border border-white/40">
+                GRID
+              </span>
+            </div>
+            <p className="text-[10px] text-slate-300 font-medium tracking-wide">
+              Smart Water-Glass Matrix
+            </p>
+          </div>
         </div>
-        <h1 className="font-semibold text-lg text-[#4b8eff] tracking-tight drop-shadow-[0_0_10px_rgba(75,142,255,0.4)]">Hiku Control</h1>
-        <p className="text-xs text-[#c1c6d7] mt-0.5 font-medium tracking-wide">City Grid Alpha</p>
       </div>
 
-      {/* Main Navigation Links */}
+      {/* Navigation Links */}
       <div className="flex-1 px-3.5 py-5 space-y-2 overflow-y-auto">
         <button
           onClick={() => onNavigate('dashboard')}
-          className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-medium transition-all ${
+          className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-medium transition-all relative overflow-hidden ${
             currentScreen === 'dashboard'
-              ? 'bg-[#4b8eff] text-white shadow-[0_8px_25px_rgba(75,142,255,0.45)] border border-white/30 font-semibold scale-[1.02]'
-              : 'text-[#c1c6d7] hover:text-white hover:bg-white/[0.07] border border-transparent hover:border-white/10'
+              ? 'bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-400 text-slate-950 shadow-[0_8px_25px_rgba(52,211,153,0.45)] border border-white/80 font-bold scale-[1.02]'
+              : 'text-slate-300 hover:text-white hover:bg-white/[0.08] border border-transparent hover:border-white/20'
           }`}
         >
-          <div className="flex items-center gap-3">
+          {currentScreen === 'dashboard' && (
+            <span className="absolute inset-0 bg-white/25 animate-pulse pointer-events-none" />
+          )}
+          <div className="flex items-center gap-3 relative z-10">
             <Map className="w-5 h-5" />
             <span>Dashboard</span>
           </div>
@@ -46,18 +70,21 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         <button
           onClick={() => onNavigate('problems')}
-          className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-medium transition-all ${
+          className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-medium transition-all relative overflow-hidden ${
             currentScreen === 'problems'
-              ? 'bg-[#4b8eff] text-white shadow-[0_8px_25px_rgba(75,142,255,0.45)] border border-white/30 font-semibold scale-[1.02]'
-              : 'text-[#c1c6d7] hover:text-white hover:bg-white/[0.07] border border-transparent hover:border-white/10'
+              ? 'bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-400 text-slate-950 shadow-[0_8px_25px_rgba(52,211,153,0.45)] border border-white/80 font-bold scale-[1.02]'
+              : 'text-slate-300 hover:text-white hover:bg-white/[0.08] border border-transparent hover:border-white/20'
           }`}
         >
-          <div className="flex items-center gap-3">
-            <AlertTriangle className="w-5 h-5 text-[#ffb4ab]" />
+          {currentScreen === 'problems' && (
+            <span className="absolute inset-0 bg-white/25 animate-pulse pointer-events-none" />
+          )}
+          <div className="flex items-center gap-3 relative z-10">
+            <AlertTriangle className="w-5 h-5 text-rose-400" />
             <span>Problems</span>
           </div>
           {openFaultCount > 0 && (
-            <span className="bg-[#ffb4ab]/25 border border-[#ffb4ab]/40 text-[#ffb4ab] text-xs px-2 py-0.5 rounded-full font-bold shadow-sm">
+            <span className="bg-rose-500/30 border border-rose-400/50 text-rose-300 text-xs px-2 py-0.5 rounded-full font-bold shadow-sm relative z-10">
               {openFaultCount}
             </span>
           )}
@@ -65,13 +92,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         <button
           onClick={() => onNavigate('maintenance')}
-          className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-medium transition-all ${
+          className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-medium transition-all relative overflow-hidden ${
             currentScreen === 'maintenance'
-              ? 'bg-[#4b8eff] text-white shadow-[0_8px_25px_rgba(75,142,255,0.45)] border border-white/30 font-semibold scale-[1.02]'
-              : 'text-[#c1c6d7] hover:text-white hover:bg-white/[0.07] border border-transparent hover:border-white/10'
+              ? 'bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-400 text-slate-950 shadow-[0_8px_25px_rgba(52,211,153,0.45)] border border-white/80 font-bold scale-[1.02]'
+              : 'text-slate-300 hover:text-white hover:bg-white/[0.08] border border-transparent hover:border-white/20'
           }`}
         >
-          <div className="flex items-center gap-3">
+          {currentScreen === 'maintenance' && (
+            <span className="absolute inset-0 bg-white/25 animate-pulse pointer-events-none" />
+          )}
+          <div className="flex items-center gap-3 relative z-10">
             <Wrench className="w-5 h-5" />
             <span>Maintenance</span>
           </div>
@@ -79,49 +109,52 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         <button
           onClick={() => onNavigate('analytics')}
-          className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-medium transition-all ${
+          className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-medium transition-all relative overflow-hidden ${
             currentScreen === 'analytics'
-              ? 'bg-[#4b8eff] text-white shadow-[0_8px_25px_rgba(75,142,255,0.45)] border border-white/30 font-semibold scale-[1.02]'
-              : 'text-[#c1c6d7] hover:text-white hover:bg-white/[0.07] border border-transparent hover:border-white/10'
+              ? 'bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-400 text-slate-950 shadow-[0_8px_25px_rgba(52,211,153,0.45)] border border-white/80 font-bold scale-[1.02]'
+              : 'text-slate-300 hover:text-white hover:bg-white/[0.08] border border-transparent hover:border-white/20'
           }`}
         >
-          <div className="flex items-center gap-3">
+          {currentScreen === 'analytics' && (
+            <span className="absolute inset-0 bg-white/25 animate-pulse pointer-events-none" />
+          )}
+          <div className="flex items-center gap-3 relative z-10">
             <BarChart3 className="w-5 h-5" />
             <span>Analytics</span>
           </div>
         </button>
+
+        {/* Quick Report Button */}
+        <div className="pt-4 px-1">
+          <button
+            onClick={() => onNavigate('report')}
+            className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-2xl bg-white/15 hover:bg-white/25 text-white font-semibold border border-white/40 shadow-lg hover:shadow-xl transition-all"
+          >
+            <PlusCircle className="w-4 h-4 text-emerald-300" />
+            <span>Report Anomaly</span>
+          </button>
+        </div>
       </div>
 
-      {/* Action Button: Report Fault */}
-      <div className="p-4 border-t border-white/10">
-        <button
-          onClick={() => onNavigate('report')}
-          className={`w-full py-3 px-4 rounded-2xl font-semibold text-sm flex items-center justify-center gap-2 transition-all shadow-md frosted-btn ${
-            currentScreen === 'report'
-              ? 'bg-[#adc6ff] text-[#001a41] ring-2 ring-white/50 shadow-lg shadow-[#adc6ff]/30'
-              : 'bg-[#adc6ff] text-[#001a41] hover:brightness-110 hover:shadow-lg hover:shadow-[#adc6ff]/25 border border-white/40'
-          }`}
-        >
-          <Plus className="w-4 h-4" />
-          <span>Report Fault</span>
-        </button>
-      </div>
+      {/* Grid Health Status Footer */}
+      <div className="p-4 border-t border-white/15 bg-white/[0.04]">
+        <div className="flex items-center justify-between text-xs mb-2">
+          <span className="text-slate-300 flex items-center gap-1.5">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+            Grid Telemetry
+          </span>
+          <span className="text-emerald-300 font-bold">99.8% Online</span>
+        </div>
+        <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+          <div className="bg-gradient-to-r from-emerald-400 to-teal-300 h-full rounded-full w-[99.8%]" />
+        </div>
 
-      {/* Footer Support & Logout */}
-      <div className="px-3.5 pb-6 pt-2 border-t border-white/10 space-y-1 mt-auto text-xs">
         <button
-          onClick={onOpenSupport}
-          className="w-full flex items-center gap-3 px-4 py-2.5 text-[#c1c6d7] hover:text-white hover:bg-white/[0.07] rounded-xl transition-all border border-transparent hover:border-white/10"
+          onClick={onOpenHelp}
+          className="mt-3 w-full flex items-center justify-center gap-1.5 py-1.5 text-xs text-slate-300 hover:text-white transition-all"
         >
-          <HelpCircle className="w-4 h-4" />
-          <span>Support</span>
-        </button>
-        <button
-          onClick={onLogout}
-          className="w-full flex items-center gap-3 px-4 py-2.5 text-[#ffb4ab] hover:bg-[#ffb4ab]/15 rounded-xl transition-all border border-transparent hover:border-[#ffb4ab]/25"
-        >
-          <LogOut className="w-4 h-4" />
-          <span>Logout</span>
+          <HelpCircle className="w-3.5 h-3.5" />
+          <span>Operator Manual & Docs</span>
         </button>
       </div>
     </aside>

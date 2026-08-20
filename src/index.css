@@ -7,106 +7,176 @@
 
   body {
     font-family: var(--font-inter);
-    background-color: #0b0d13;
-    color: #e3e2e7;
+    background-color: #000000;
+    color: #f1f5f9;
     min-height: 100vh;
     overflow-x: hidden;
   }
 }
 
 /* =========================================================================
-   FROSTED GLASS DESIGN SYSTEM (Glassmorphism & Specular Acrylic)
+   PLAIN BLACK THEME WITH REFINED GLASSMORPHISM
+   Pure black canvas (#000000), crystal glass accents, crisp contrast
    ========================================================================= */
 
-/* Primary Frosted Glass Container Sheet */
-.glass-panel, .frosted-panel {
-  background: rgba(20, 23, 33, 0.58);
-  backdrop-filter: blur(28px) saturate(190%);
-  -webkit-backdrop-filter: blur(28px) saturate(190%);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+/* Primary Liquid Water Glass Frame Panel */
+.liquid-frame, .glass-panel, .frosted-panel {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.02) 40%,
+    rgba(10, 10, 10, 0.85) 100%
+  );
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.22),
-    inset 0 0 20px 0 rgba(255, 255, 255, 0.02),
-    0 24px 60px -12px rgba(0, 0, 0, 0.55),
-    0 8px 24px -4px rgba(0, 0, 0, 0.35);
-  border-radius: 1.25rem;
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.35),
+    0 16px 40px -8px rgba(0, 0, 0, 0.9);
+  border-radius: 1.5rem;
+  position: relative;
 }
 
-/* Ultra Frosted Glass (Sidebars, Headers, Floating Docks) */
-.frosted-ultra {
-  background: rgba(14, 16, 25, 0.65);
-  backdrop-filter: blur(32px) saturate(200%);
-  -webkit-backdrop-filter: blur(32px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+/* Elevated High-Contrast Top Slide Header */
+.frosted-top-header {
+  background: linear-gradient(
+    180deg,
+    rgba(20, 20, 20, 0.95) 0%,
+    rgba(0, 0, 0, 0.92) 100%
+  );
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
   box-shadow: 
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.18),
-    0 20px 50px rgba(0, 0, 0, 0.6);
+    0 4px 24px rgba(0, 0, 0, 0.9);
 }
 
-/* Frosted Glass Card */
-.glass-card, .frosted-card {
-  background: rgba(28, 32, 46, 0.52);
-  backdrop-filter: blur(22px) saturate(180%);
-  -webkit-backdrop-filter: blur(22px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  box-shadow: 
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.18),
-    inset 0 -1px 0 0 rgba(0, 0, 0, 0.2),
-    0 10px 30px -5px rgba(0, 0, 0, 0.3);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.glass-card:hover, .frosted-card:hover {
-  transform: translateY(-2px);
-  background: rgba(36, 42, 60, 0.65);
-  border-color: rgba(255, 255, 255, 0.26);
+/* Liquid Water Glowing Border Accents */
+.liquid-frame-emerald, .liquid-frame-cyan {
+  border-color: rgba(52, 211, 153, 0.45);
   box-shadow: 
     inset 0 1px 1px 0 rgba(255, 255, 255, 0.3),
-    0 16px 40px -8px rgba(0, 0, 0, 0.5),
-    0 0 25px rgba(75, 142, 255, 0.15);
+    0 12px 30px -8px rgba(0, 0, 0, 0.9),
+    0 0 20px rgba(52, 211, 153, 0.2);
 }
 
-/* Frosted Interactive Input */
-.glass-input, .frosted-input {
-  background: rgba(12, 14, 21, 0.55);
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+.liquid-frame-teal, .liquid-frame-blue {
+  border-color: rgba(45, 212, 191, 0.4);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.3),
+    0 12px 30px -8px rgba(0, 0, 0, 0.9),
+    0 0 20px rgba(45, 212, 191, 0.2);
+}
+
+.liquid-frame-amber {
+  border-color: rgba(251, 191, 36, 0.4);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.3),
+    0 12px 30px -8px rgba(0, 0, 0, 0.9),
+    0 0 20px rgba(251, 191, 36, 0.2);
+}
+
+.liquid-frame-crimson {
+  border-color: rgba(248, 113, 113, 0.45);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.3),
+    0 12px 30px -8px rgba(0, 0, 0, 0.9),
+    0 0 20px rgba(248, 113, 113, 0.2);
+}
+
+/* Ultra Liquid Crystal Glass (Sidebars, Floating HUDs) */
+.frosted-ultra {
+  background: linear-gradient(
+    180deg,
+    rgba(18, 18, 18, 0.96) 0%,
+    rgba(5, 5, 5, 0.98) 100%
+  );
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.95);
+}
+
+/* Liquid Water Interactive Card */
+.liquid-card, .glass-card, .frosted-card {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.02) 40%,
+    rgba(12, 12, 12, 0.85) 100%
+  );
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.25),
+    0 8px 24px rgba(0, 0, 0, 0.7);
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.liquid-card:hover, .glass-card:hover, .frosted-card:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.04) 40%,
+    rgba(24, 24, 24, 0.9) 100%
+  );
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.5),
+    0 12px 32px -4px rgba(0, 0, 0, 0.85);
+}
+
+/* Liquid Water Interactive Input */
+.glass-input, .frosted-input {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.4),
+    inset 0 2px 6px rgba(0, 0, 0, 0.5);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #ffffff;
 }
 
 .glass-input:focus-within, .glass-input:focus, .frosted-input:focus {
-  background: rgba(16, 20, 30, 0.75);
-  border-color: rgba(75, 142, 255, 0.7);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.8);
   box-shadow: 
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.2),
-    0 0 20px rgba(75, 142, 255, 0.35);
+    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.7),
+    0 0 25px rgba(52, 211, 153, 0.45);
   outline: none;
 }
 
-/* Frosted Glass Pill / Badge */
+/* Liquid Water Glass Pill / Badge */
 .frosted-pill {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: inset 0 1.5px 1px rgba(255, 255, 255, 0.55);
 }
 
-/* Frosted Modal Backdrop */
+/* Water Modal Backdrop */
 .frosted-modal-backdrop {
-  background: rgba(6, 8, 14, 0.65);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  background: rgba(4, 8, 12, 0.82);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
 }
 
-/* Frosted Buttons with Specular Highlights */
+/* Liquid Water Buttons with Caustic Highlights */
 .liquid-btn, .frosted-btn {
   position: relative;
   overflow: hidden;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -120,7 +190,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.5),
     transparent
   );
   transition: left 0.6s ease;
@@ -131,118 +201,106 @@
 }
 
 .liquid-btn:hover, .frosted-btn:hover {
-  filter: brightness(1.12);
+  filter: brightness(1.15);
   transform: translateY(-1px);
-  box-shadow: 0 10px 25px rgba(0, 91, 193, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  box-shadow: 0 10px 25px rgba(52, 211, 153, 0.4), inset 0 1.5px 1px rgba(255, 255, 255, 0.7);
 }
 
 .liquid-btn:active, .frosted-btn:active {
-  transform: translateY(0.5px) scale(0.99);
+  transform: translateY(0.5px) scale(0.98);
 }
 
-/* Pulse status indicators with frosted glow */
+/* Pulse status indicators with watery ripple glow */
 .glow-pulse-green {
-  animation: pulse-green 2s infinite;
+  animation: pulse-water-green 2s infinite;
 }
-@keyframes pulse-green {
-  0% { box-shadow: 0 0 0 0 rgba(57, 220, 210, 0.8), 0 0 12px rgba(57, 220, 210, 0.5); }
-  70% { box-shadow: 0 0 0 12px rgba(57, 220, 210, 0), 0 0 16px rgba(57, 220, 210, 0.3); }
-  100% { box-shadow: 0 0 0 0 rgba(57, 220, 210, 0), 0 0 12px rgba(57, 220, 210, 0.5); }
+@keyframes pulse-water-green {
+  0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.85), 0 0 14px rgba(52, 211, 153, 0.7); }
+  70% { box-shadow: 0 0 0 14px rgba(52, 211, 153, 0), 0 0 20px rgba(52, 211, 153, 0.35); }
+  100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0), 0 0 14px rgba(52, 211, 153, 0.7); }
 }
 
 .glow-pulse-red {
-  animation: pulse-red 2s infinite;
+  animation: pulse-water-red 2s infinite;
 }
-@keyframes pulse-red {
-  0% { box-shadow: 0 0 0 0 rgba(255, 180, 171, 0.8), 0 0 12px rgba(255, 180, 171, 0.5); }
-  70% { box-shadow: 0 0 0 12px rgba(255, 180, 171, 0), 0 0 16px rgba(255, 180, 171, 0.3); }
-  100% { box-shadow: 0 0 0 0 rgba(255, 180, 171, 0), 0 0 12px rgba(255, 180, 171, 0.5); }
+@keyframes pulse-water-red {
+  0% { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0.9), 0 0 16px rgba(248, 113, 113, 0.75); }
+  70% { box-shadow: 0 0 0 14px rgba(248, 113, 113, 0), 0 0 22px rgba(248, 113, 113, 0.4); }
+  100% { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0), 0 0 16px rgba(248, 113, 113, 0.75); }
 }
 
 .glow-pulse-yellow {
-  animation: pulse-yellow 2s infinite;
+  animation: pulse-water-yellow 2s infinite;
 }
-@keyframes pulse-yellow {
-  0% { box-shadow: 0 0 0 0 rgba(255, 218, 106, 0.8), 0 0 12px rgba(255, 218, 106, 0.5); }
-  70% { box-shadow: 0 0 0 12px rgba(255, 218, 106, 0), 0 0 16px rgba(255, 218, 106, 0.3); }
-  100% { box-shadow: 0 0 0 0 rgba(255, 218, 106, 0), 0 0 12px rgba(255, 218, 106, 0.5); }
+@keyframes pulse-water-yellow {
+  0% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.85), 0 0 14px rgba(251, 191, 36, 0.6); }
+  70% { box-shadow: 0 0 0 14px rgba(251, 191, 36, 0), 0 0 18px rgba(251, 191, 36, 0.35); }
+  100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0), 0 0 14px rgba(251, 191, 36, 0.6); }
 }
 
 .glow-critical {
-  box-shadow: 0 0 15px rgba(255, 180, 171, 0.4);
+  box-shadow: 0 0 18px rgba(248, 113, 113, 0.5);
   animation: pulse-critical 2s infinite;
 }
 @keyframes pulse-critical {
-  0% { box-shadow: 0 0 8px rgba(255, 180, 171, 0.3); }
-  50% { box-shadow: 0 0 18px rgba(255, 180, 171, 0.6); }
-  100% { box-shadow: 0 0 8px rgba(255, 180, 171, 0.3); }
+  0% { box-shadow: 0 0 10px rgba(248, 113, 113, 0.35); }
+  50% { box-shadow: 0 0 22px rgba(248, 113, 113, 0.7); }
+  100% { box-shadow: 0 0 10px rgba(248, 113, 113, 0.35); }
 }
 
 .glow-logo {
-  filter: drop-shadow(0 0 24px rgba(173, 198, 255, 0.45));
+  filter: drop-shadow(0 0 28px rgba(255, 255, 255, 0.7));
 }
 
 .map-bg-grid {
-  background-color: #0d0f17;
-  background-image: radial-gradient(rgba(173, 198, 255, 0.14) 1.2px, transparent 1.2px);
+  background-color: #000000;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
-/* Ambient Floating Orbs for Frosted Light Refraction */
-.ambient-glow-orb-cyan {
-  position: absolute;
-  border-radius: 9999px;
-  background: radial-gradient(circle, rgba(57, 220, 210, 0.28) 0%, rgba(57, 220, 210, 0) 70%);
-  filter: blur(80px);
-  pointer-events: none;
-  animation: float-slow 14s ease-in-out infinite alternate;
+/* Water Ripple Effect */
+@keyframes water-ripple {
+  0% { transform: scale(0.8); opacity: 0.9; }
+  100% { transform: scale(2.4); opacity: 0; }
 }
 
-.ambient-glow-orb-blue {
-  position: absolute;
-  border-radius: 9999px;
-  background: radial-gradient(circle, rgba(75, 142, 255, 0.32) 0%, rgba(75, 142, 255, 0) 70%);
-  filter: blur(90px);
-  pointer-events: none;
-  animation: float-slow-reverse 18s ease-in-out infinite alternate;
+.water-ripple-anim {
+  animation: water-ripple 2.2s cubic-bezier(0.1, 0.8, 0.3, 1) infinite;
 }
 
-.ambient-glow-orb-violet {
-  position: absolute;
-  border-radius: 9999px;
-  background: radial-gradient(circle, rgba(142, 90, 255, 0.22) 0%, rgba(142, 90, 255, 0) 70%);
-  filter: blur(85px);
-  pointer-events: none;
-  animation: float-slow 16s ease-in-out infinite alternate;
+@keyframes water-surface-ripple {
+  0% {
+    transform: scale(0.2);
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(3.5);
+    opacity: 0;
+  }
 }
 
-@keyframes float-slow {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(40px, -30px) scale(1.1); }
-  100% { transform: translate(-30px, 20px) scale(0.95); }
+.water-nav-ripple {
+  animation: water-surface-ripple 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes float-slow-reverse {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-35px, 25px) scale(1.15); }
-  100% { transform: translate(25px, -35px) scale(0.9); }
-}
-
-/* Custom Frosted Scrollbar */
+/* Custom Water Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.04);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.3);
   border-radius: 10px;
   backdrop-filter: blur(10px);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .hide-scrollbar::-webkit-scrollbar {
@@ -253,3 +311,102 @@
   scrollbar-width: none;
 }
 
+/* =========================================================================
+   IPHONE LIQUID WATER GLASS DOCK & FLOATING WIDGETS
+   ========================================================================= */
+
+.iphone-liquid-dock {
+  background: rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -0.5px 0.5px 0 rgba(0, 0, 0, 0.3),
+    0 8px 32px -4px rgba(0, 0, 0, 0.45);
+}
+
+.iphone-liquid-active {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(52, 211, 153, 0.18) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.6),
+    0 2px 10px rgba(52, 211, 153, 0.25);
+}
+
+.iphone-home-bar {
+  width: 64px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 9999px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* =========================================================================
+   LEAFLET REAL-TIME MAP STYLING & WATER POPUP OVERLAYS
+   ========================================================================= */
+
+@import "leaflet/dist/leaflet.css";
+
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  background: #060b10 !important;
+  font-family: var(--font-inter) !important;
+  z-index: 10;
+}
+
+.leaflet-popup-content-wrapper {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.16) 0%,
+    rgba(12, 22, 28, 0.96) 100%
+  ) !important;
+  backdrop-filter: blur(32px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(200%) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.45) !important;
+  border-radius: 1.25rem !important;
+  box-shadow: 
+    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.7),
+    0 20px 40px rgba(0, 0, 0, 0.85),
+    0 0 25px rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  padding: 4px !important;
+}
+
+.leaflet-popup-tip {
+  background: #0c161c !important;
+  border: 1px solid rgba(255, 255, 255, 0.45) !important;
+}
+
+.leaflet-popup-close-button {
+  color: #cbd5e1 !important;
+  padding: 6px !important;
+}
+
+.leaflet-popup-close-button:hover {
+  color: #ffffff !important;
+}
+
+.leaflet-bar {
+  border: 1.5px solid rgba(255, 255, 255, 0.4) !important;
+  border-radius: 1rem !important;
+  overflow: hidden !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7) !important;
+}
+
+.leaflet-bar a {
+  background: rgba(14, 24, 32, 0.9) !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25) !important;
+  backdrop-filter: blur(24px) !important;
+}
+
+.leaflet-bar a:hover {
+  background: rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+}

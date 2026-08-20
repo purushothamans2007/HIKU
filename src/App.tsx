@@ -4,6 +4,7 @@
  */
 
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { ScreenType, StreetLightPole, FaultReport, Technician, AlertNotification, GridTelemetryStats } from './types';
 import { 
   INITIAL_POLES, 
@@ -12,7 +13,7 @@ import {
   INITIAL_ALERTS, 
   INITIAL_STATS 
 } from './data/mockData';
-import { LiquidShaderBackground } from './components/LiquidShaderBackground';
+import { WaterRippleTransition } from './components/WaterRippleTransition';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { MobileNavBar } from './components/MobileNavBar';
@@ -173,15 +174,7 @@ export default function App() {
   const openFaultCount = faults.filter((f) => f.status !== 'Resolved').length;
 
   return (
-    <div className="min-h-screen bg-[#0b0d13] text-[#e3e2e7] flex flex-col font-sans selection:bg-[#4b8eff] selection:text-[#00285c] relative overflow-hidden">
-      {/* Background Liquid GL Shader for Frosted Refraction */}
-      <LiquidShaderBackground opacity={0.75} />
-
-      {/* Ambient Floating Glow Orbs */}
-      <div className="ambient-glow-orb-blue w-[600px] h-[600px] -top-32 -left-32" />
-      <div className="ambient-glow-orb-cyan w-[500px] h-[500px] top-1/3 -right-24" />
-      <div className="ambient-glow-orb-violet w-[550px] h-[550px] -bottom-32 left-1/4" />
-
+    <div className="min-h-screen bg-black text-[#e3e2e7] flex flex-col font-sans selection:bg-emerald-400 selection:text-black relative overflow-hidden">
       {/* Top Header */}
       <Header
         notifications={alerts}
@@ -206,51 +199,64 @@ export default function App() {
           onOpenSupport={() => setIsSupportOpen(true)}
         />
 
-        {/* Content View Area */}
-        <main className="flex-1 lg:pl-64 pb-20 lg:pb-0 overflow-y-auto">
-          {currentScreen === 'dashboard' && (
-            <DashboardScreen
-              poles={poles}
-              faults={faults}
-              stats={stats}
-              alerts={alerts}
-              selectedPole={selectedPole}
-              onSelectPole={(p) => setSelectedPole(p)}
-              onOpenPoleDetails={(p) => setSelectedPoleModal(p)}
-              onTogglePolePower={handleTogglePolePower}
-              onUpdatePoleBrightness={handleUpdatePoleBrightness}
-              onNavigateToProblems={() => setCurrentScreen('problems')}
-              onNavigateToReport={() => setCurrentScreen('report')}
-            />
-          )}
+        {/* Content View Area with Water Liquid Ripple & Smooth Flow Transitions */}
+        <main className="flex-1 lg:pl-64 overflow-y-auto relative min-h-[calc(100vh-4rem)]">
+          <WaterRippleTransition screenKey={currentScreen} />
 
-          {currentScreen === 'problems' && (
-            <ProblemsScreen
-              faults={faults}
-              onOpenFaultDetails={(f) => setSelectedFaultModal(f)}
-              onNavigateToReport={() => setCurrentScreen('report')}
-            />
-          )}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentScreen}
+              initial={{ opacity: 0, y: 10, scale: 0.99, filter: 'blur(4px)' }}
+              animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, y: -10, scale: 0.99, filter: 'blur(4px)' }}
+              transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+              className="w-full h-full"
+            >
+              {currentScreen === 'dashboard' && (
+                <DashboardScreen
+                  poles={poles}
+                  faults={faults}
+                  stats={stats}
+                  alerts={alerts}
+                  selectedPole={selectedPole}
+                  onSelectPole={(p) => setSelectedPole(p)}
+                  onOpenPoleDetails={(p) => setSelectedPoleModal(p)}
+                  onTogglePolePower={handleTogglePolePower}
+                  onUpdatePoleBrightness={handleUpdatePoleBrightness}
+                  onNavigateToProblems={() => setCurrentScreen('problems')}
+                  onNavigateToReport={() => setCurrentScreen('report')}
+                />
+              )}
 
-          {currentScreen === 'report' && (
-            <ReportFaultScreen
-              onBack={() => setCurrentScreen('problems')}
-              onSubmitFault={handleCreateFault}
-              onNavigateToProblems={() => setCurrentScreen('problems')}
-            />
-          )}
+              {currentScreen === 'problems' && (
+                <ProblemsScreen
+                  faults={faults}
+                  onOpenFaultDetails={(f) => setSelectedFaultModal(f)}
+                  onNavigateToReport={() => setCurrentScreen('report')}
+                />
+              )}
 
-          {currentScreen === 'maintenance' && (
-            <MaintenanceScreen
-              technicians={technicians}
-              faults={faults}
-              onOpenFaultDetails={(f) => setSelectedFaultModal(f)}
-            />
-          )}
+              {currentScreen === 'report' && (
+                <ReportFaultScreen
+                  onBack={() => setCurrentScreen('problems')}
+                  onSubmitFault={handleCreateFault}
+                  onNavigateToProblems={() => setCurrentScreen('problems')}
+                />
+              )}
 
-          {currentScreen === 'analytics' && (
-            <AnalyticsScreen stats={stats} />
-          )}
+              {currentScreen === 'maintenance' && (
+                <MaintenanceScreen
+                  technicians={technicians}
+                  faults={faults}
+                  onOpenFaultDetails={(f) => setSelectedFaultModal(f)}
+                />
+              )}
+
+              {currentScreen === 'analytics' && (
+                <AnalyticsScreen stats={stats} />
+              )}
+            </motion.div>
+          </AnimatePresence>
         </main>
       </div>
 

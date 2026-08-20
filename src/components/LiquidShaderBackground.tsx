@@ -34,10 +34,7 @@ export const LiquidShaderBackground: React.FC<LiquidShaderBackgroundProps> = ({
     syncSize();
 
     const gl = canvas.getContext('webgl') || (canvas.getContext('experimental-webgl') as WebGLRenderingContext | null);
-    if (!gl) {
-      // Fallback simple background if WebGL is unsupported
-      return;
-    }
+    if (!gl) return;
 
     const vs = `attribute vec2 a_position;
 varying vec2 v_texCoord;
@@ -52,8 +49,8 @@ uniform float u_time;
 uniform vec2 u_resolution;
 uniform vec2 u_mouse;
 
-// Liquid Glass Background Shader
-// Smooth, flowing dark navy/midnight blue noise with a glass-like sheen
+// Pure Crystal Liquid Water Glassmorphism Shader
+// Realistic transparent water caustics, diamond specular highlights, mint-emerald refraction
 
 vec3 hash(vec3 p) {
     p = vec3(dot(p, vec3(127.1, 311.7, 74.7)),
@@ -76,50 +73,71 @@ float noise(vec3 p) {
                        dot(hash(i + vec3(1, 1, 1)), f - vec3(1, 1, 1)), u.x), u.y), u.z);
 }
 
+// Pure water wave caustics generator
+float waterCaustics(vec2 uv, float t) {
+    vec2 p = uv * 4.2;
+    float c = 0.0;
+    for(int i = 1; i <= 3; i++) {
+        float fi = float(i);
+        p += vec2(
+            sin(p.y * 1.6 + t * 0.75 * fi + fi) * 0.45,
+            cos(p.x * 1.6 + t * 0.65 * fi + fi) * 0.45
+        );
+        c += 1.0 / length(vec2(
+            sin(p.x + t * 0.45),
+            cos(p.y + t * 0.55)
+        ) * 1.9);
+    }
+    return clamp(c * 0.13, 0.0, 1.0);
+}
+
 void main() {
     vec2 uv = v_texCoord;
     vec2 m = u_mouse / u_resolution;
     
-    // Distort UVs based on noise and mouse
-    float n = noise(vec3(uv * 3.0, u_time * 0.2));
-    uv += n * 0.05;
+    // Wave distortion & mouse ripple interaction
+    float dMouse = distance(uv, m);
+    float mouseWave = sin(dMouse * 24.0 - u_time * 3.8) * exp(-dMouse * 4.0);
+    uv += vec2(mouseWave * 0.022);
     
-    // Base colors
-    vec3 deepBackground = vec3(0.043, 0.051, 0.075); // #0B0D13
-    vec3 midnightNavy   = vec3(0.082, 0.102, 0.149); // #151A26
-    vec3 cyanGlow       = vec3(0.224, 0.863, 0.824); // #39dcd2
-    vec3 blueGlow       = vec3(0.294, 0.557, 1.000); // #4b8eff
-    vec3 amberGlow      = vec3(1.000, 0.855, 0.416); // #ffda6a
-    vec3 violetGlow     = vec3(0.557, 0.353, 1.000); // #8e5aff
+    float fluidNoise = noise(vec3(uv * 2.2, u_time * 0.12));
+    uv += fluidNoise * 0.035;
     
-    // Wave 1: Slow sweeping deep current
-    float f1 = 0.5 + 0.5 * noise(vec3(uv * 1.5, u_time * 0.08));
-    vec3 color = mix(deepBackground, midnightNavy, f1);
+    // Crystal Liquid Water Palette: Obsidian Glass, Platinum, Mint & Jade Emerald
+    vec3 obsidianGlass = vec3(0.024, 0.043, 0.063); // #060b10 Deep Crystal Base
+    vec3 smokyGlass    = vec3(0.051, 0.082, 0.110); // #0d151c Smoky Translucent Glass
+    vec3 liquidDiamond = vec3(0.950, 0.980, 1.000); // #f2faff Diamond Specular Caustics
+    vec3 seaMint       = vec3(0.200, 0.830, 0.650); // #34d3a6 Sea Mint Liquid
+    vec3 liquidJade    = vec3(0.063, 0.725, 0.506); // #10b981 Jade Emerald
+    vec3 silverPrism   = vec3(0.820, 0.880, 0.940); // #d1e0f0 Prismatic Silver
     
-    // Wave 2: Cyan & Azure light currents
-    float f2 = smoothstep(0.35, 0.85, noise(vec3(uv * 2.2 + vec2(0.3, -0.2), u_time * 0.12)));
-    color += blueGlow * f2 * 0.18;
+    // Base crystal gradient
+    float f1 = 0.5 + 0.5 * noise(vec3(uv * 1.1, u_time * 0.05));
+    vec3 color = mix(obsidianGlass, smokyGlass, f1);
     
-    // Wave 3: Cyan stream
-    float f3 = smoothstep(0.4, 0.9, noise(vec3(uv * 2.8 - vec2(0.5, 0.4), u_time * 0.15)));
-    color += cyanGlow * f3 * 0.14;
-
-    // Wave 4: Subtle violet aurora top-right
-    float f4 = smoothstep(0.45, 0.95, noise(vec3((uv - vec2(0.8, 0.8)) * 2.0, u_time * 0.1)));
-    color += violetGlow * f4 * 0.12;
-
-    // Wave 5: Soft amber streetlight reflection lower-center
-    float f5 = smoothstep(0.5, 0.98, noise(vec3((uv - vec2(0.4, 0.1)) * 3.0, u_time * 0.09)));
-    color += amberGlow * f5 * 0.08;
+    // Water Caustic light reflections with diamond shine
+    float caustics = waterCaustics(uv, u_time * 0.35);
+    color += liquidDiamond * caustics * 0.24;
+    color += seaMint * caustics * 0.16;
     
-    // Interactive dynamic mouse light
-    float d = distance(v_texCoord, m);
-    color += blueGlow * (1.0 - smoothstep(0.0, 0.75, d)) * 0.22;
-    color += cyanGlow * (1.0 - smoothstep(0.0, 0.35, d)) * 0.12;
+    // Flowing mint fluid streams
+    float stream1 = smoothstep(0.35, 0.85, noise(vec3(uv * 1.8 + vec2(0.2, -0.3), u_time * 0.09)));
+    color += seaMint * stream1 * 0.14;
     
-    // Fine specular frosted grain / glass shimmer
-    float shimmer = smoothstep(0.48, 0.52, noise(vec3(uv * 16.0, u_time * 0.4)));
-    color += vec3(1.0) * shimmer * 0.025;
+    float stream2 = smoothstep(0.4, 0.9, noise(vec3(uv * 2.4 - vec2(0.4, 0.5), u_time * 0.12)));
+    color += liquidJade * stream2 * 0.12;
+    
+    // Silver Prismatic volume lighting
+    float volumeLight = smoothstep(0.38, 0.95, noise(vec3((uv - vec2(0.65, 0.25)) * 1.6, u_time * 0.07)));
+    color += silverPrism * volumeLight * 0.18;
+    
+    // Cursor Bioluminescent Water Ripples
+    color += liquidDiamond * (1.0 - smoothstep(0.0, 0.6, dMouse)) * 0.22;
+    color += seaMint * (1.0 - smoothstep(0.0, 0.32, dMouse)) * 0.20;
+    
+    // Crystal glass specular glimmer
+    float glimmer = smoothstep(0.48, 0.52, noise(vec3(uv * 22.0, u_time * 0.45)));
+    color += liquidDiamond * glimmer * 0.045;
     
     gl_FragColor = vec4(color, 1.0);
 }`;

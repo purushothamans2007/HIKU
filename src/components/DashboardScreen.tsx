@@ -8,12 +8,15 @@ import {
   Users, 
   MapPin, 
   Zap, 
-  Sliders, 
   Power, 
   ExternalLink,
   ShieldAlert,
   Clock,
-  BatteryCharging
+  BatteryCharging,
+  ChevronRight,
+  Compass,
+  Droplets,
+  Sparkles
 } from 'lucide-react';
 
 interface DashboardScreenProps {
@@ -43,124 +46,157 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
   onNavigateToProblems,
   onNavigateToReport
 }) => {
-  return (
-    <div className="relative w-full h-[calc(100vh-4rem)] overflow-hidden flex flex-col lg:flex-row p-3 sm:p-6 gap-4 sm:gap-6">
-      {/* Interactive Map Canvas Center-Left */}
-      <div className="flex-1 h-full min-h-[350px] relative rounded-3xl overflow-hidden frosted-panel border border-white/20 shadow-[0_24px_60px_rgba(0,0,0,0.6)] flex flex-col">
-        <InteractiveMap
-          poles={poles}
-          faults={faults}
-          selectedPole={selectedPole}
-          onSelectPole={onSelectPole}
-        />
+  const getStatusColor = (status: StreetLightPole['status']) => {
+    switch (status) {
+      case 'active':
+        return 'bg-emerald-500/20 text-emerald-300 border-emerald-400/40 shadow-[0_0_14px_rgba(52,211,153,0.3)]';
+      case 'warning':
+        return 'bg-amber-500/20 text-amber-300 border-amber-400/40 shadow-[0_0_14px_rgba(251,191,36,0.3)]';
+      case 'offline':
+      case 'fault':
+      default:
+        return 'bg-rose-500/20 text-rose-300 border-rose-400/40 shadow-[0_0_14px_rgba(248,113,113,0.3)]';
+    }
+  };
 
-        {/* Docked Selected Pole Bottom Card */}
-        <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 z-30 frosted-panel rounded-2xl p-4 sm:p-5 border-l-4 border-l-[#39dcd2] shadow-[0_20px_50px_rgba(0,0,0,0.7)] flex flex-col md:flex-row items-start md:items-center justify-between gap-4 animate-in fade-in slide-in-from-bottom-3 duration-300">
-          <div className="flex items-center gap-4">
-            {/* Pole Icon Box */}
-            <div className="bg-[#1a2030]/80 p-3.5 rounded-2xl border border-white/20 shrink-0 text-[#39dcd2] shadow-inner">
-              <Lightbulb className="w-6 h-6 text-[#39dcd2] drop-shadow-[0_0_10px_rgba(57,220,210,0.8)] animate-pulse" />
-            </div>
+  // Selected Pole Quick Card in Crystal Liquid Glass
+  const renderPoleDetailsCard = () => (
+    <div className="liquid-frame p-4 sm:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 animate-in fade-in duration-300 border border-white/40 shadow-2xl">
+      <div className="flex items-center gap-3 sm:gap-4 w-full md:w-auto">
+        {/* Pole Status Icon */}
+        <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/35 shrink-0 text-emerald-300 flex items-center justify-center shadow-inner">
+          <Lightbulb className="w-6 h-6 text-emerald-400 drop-shadow-[0_0_12px_rgba(52,211,153,0.8)] animate-pulse" />
+        </div>
 
-            {/* Pole Name & Meta */}
-            <div>
-              <div className="flex items-center gap-2.5 flex-wrap">
-                <h3 className="font-bold text-base sm:text-lg text-white font-mono tracking-tight">
-                  Pole ID: {selectedPole.id}
-                </h3>
-                <span
-                  className={`text-xs px-2.5 py-0.5 rounded-full border font-semibold uppercase tracking-wider ${
-                    selectedPole.status === 'active'
-                      ? 'bg-[#39dcd2]/20 text-[#39dcd2] border-[#39dcd2]/40 shadow-[0_0_12px_rgba(57,220,210,0.2)]'
-                      : selectedPole.status === 'warning'
-                      ? 'bg-[#ffda6a]/20 text-[#ffda6a] border-[#ffda6a]/40 shadow-[0_0_12px_rgba(255,218,106,0.2)]'
-                      : 'bg-[#ffb4ab]/20 text-[#ffb4ab] border-[#ffb4ab]/40 shadow-[0_0_12px_rgba(255,180,171,0.2)]'
-                  }`}
-                >
-                  {selectedPole.status}
-                </span>
-                {selectedPole.solarEquipped && (
-                  <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-[#4b8eff]/20 text-[#4b8eff] border border-[#4b8eff]/35 flex items-center gap-1">
-                    <BatteryCharging className="w-3.5 h-3.5 text-[#39dcd2]" />
-                    Solar {selectedPole.batteryLevel}%
-                  </span>
-                )}
-              </div>
-
-              <p className="text-xs sm:text-sm text-[#c1c6d7] flex items-center gap-1.5 mt-1">
-                <MapPin className="w-3.5 h-3.5 text-[#4b8eff] shrink-0" />
-                <span>
-                  {selectedPole.lat.toFixed(4)}° N, {selectedPole.lng.toFixed(4)}° E • {selectedPole.location}
-                </span>
-              </p>
-            </div>
+        {/* Pole Identity & Meta */}
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h3 className="font-bold text-base sm:text-lg text-white font-mono tracking-tight">
+              {selectedPole.id}
+            </h3>
+            <span className={`text-[10px] sm:text-xs px-2.5 py-0.5 rounded-full border font-semibold uppercase tracking-wider ${getStatusColor(selectedPole.status)}`}>
+              {selectedPole.status}
+            </span>
+            {selectedPole.solarEquipped && (
+              <span className="text-[10px] sm:text-xs px-2.5 py-0.5 rounded-full bg-white/15 text-emerald-300 border border-white/30 flex items-center gap-1">
+                <BatteryCharging className="w-3.5 h-3.5 text-emerald-400" />
+                Solar {selectedPole.batteryLevel}%
+              </span>
+            )}
           </div>
 
-          {/* Quick Metrics & Actions */}
-          <div className="flex items-center gap-4 sm:gap-6 w-full md:w-auto justify-between md:justify-end border-t md:border-t-0 pt-3 md:pt-0 border-white/10">
-            <div className="text-left md:text-right">
-              <p className="text-[11px] text-[#8b90a0]">Last Ping</p>
-              <p className="text-xs sm:text-sm font-semibold text-white">{selectedPole.lastPing}</p>
-            </div>
-
-            <div className="text-left md:text-right">
-              <p className="text-[11px] text-[#8b90a0]">Power Draw</p>
-              <p className="text-xs sm:text-sm font-semibold text-[#39dcd2] font-mono drop-shadow-[0_0_8px_rgba(57,220,210,0.5)]">
-                {selectedPole.powerDraw}W
-              </p>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => onTogglePolePower(selectedPole.id)}
-                className={`p-2.5 rounded-xl border transition-all ${
-                  selectedPole.brightness > 0
-                    ? 'bg-[#4b8eff]/25 text-[#4b8eff] border-[#4b8eff]/50 hover:bg-[#4b8eff] hover:text-white shadow-[0_0_15px_rgba(75,142,255,0.35)]'
-                    : 'bg-white/5 text-[#8b90a0] border-white/10 hover:text-white'
-                }`}
-                title={selectedPole.brightness > 0 ? 'Turn Off Node' : 'Turn On Node'}
-              >
-                <Power className="w-4 h-4" />
-              </button>
-
-              <button
-                onClick={() => onOpenPoleDetails(selectedPole)}
-                className="frosted-btn bg-[#4b8eff]/20 hover:bg-[#4b8eff] text-[#adc6ff] hover:text-white border border-[#4b8eff]/40 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all shadow-md flex items-center gap-1.5"
-              >
-                <span>View Details</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          </div>
+          <p className="text-xs text-slate-300 flex items-center gap-1.5 mt-1 truncate">
+            <MapPin className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+            <span className="truncate">
+              {selectedPole.location} • {selectedPole.lat.toFixed(4)}°N, {selectedPole.lng.toFixed(4)}°E
+            </span>
+          </p>
         </div>
       </div>
 
-      {/* Right Sidebar Panel: Real-Time Telemetry */}
-      <aside className="w-full lg:w-84 xl:w-92 shrink-0 h-full overflow-y-auto frosted-panel rounded-3xl p-5 sm:p-6 flex flex-col gap-6 shadow-[0_24px_60px_rgba(0,0,0,0.6)] border border-white/20">
-        <div>
-          <h2 className="text-lg font-bold text-white flex items-center gap-2.5">
-            <Activity className="w-5 h-5 text-[#4b8eff] animate-pulse drop-shadow-[0_0_10px_rgba(75,142,255,0.8)]" />
-            <span>Real-Time Telemetry</span>
-          </h2>
-          <p className="text-xs text-[#c1c6d7] mt-0.5">Chennai Central District</p>
+      {/* Metrics & Action Controls */}
+      <div className="flex items-center gap-3 sm:gap-5 w-full md:w-auto justify-between md:justify-end border-t md:border-t-0 pt-3 md:pt-0 border-white/15 shrink-0">
+        <div className="text-left md:text-right">
+          <p className="text-[10px] sm:text-[11px] text-slate-400">Last Ping</p>
+          <p className="text-xs sm:text-sm font-semibold text-white">{selectedPole.lastPing}</p>
         </div>
 
-        {/* Telemetry Stat Cards */}
-        <div className="flex flex-col gap-3.5">
+        <div className="text-left md:text-right">
+          <p className="text-[10px] sm:text-[11px] text-slate-400">Power Draw</p>
+          <p className="text-xs sm:text-sm font-semibold text-emerald-300 font-mono drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]">
+            {selectedPole.powerDraw}W
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2">
+          {/* External Satellite Map Launcher */}
+          <a
+            href={`https://www.google.com/maps/search/?api=1&query=${selectedPole.lat},${selectedPole.lng}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 sm:p-2.5 rounded-xl border border-white/35 bg-white/10 hover:bg-white/25 text-white transition-all shadow-sm"
+            title="Open in Google Maps"
+          >
+            <Compass className="w-4 h-4 text-emerald-300" />
+          </a>
+
+          {/* Toggle Power Switch */}
+          <button
+            onClick={() => onTogglePolePower(selectedPole.id)}
+            className={`p-2 sm:p-2.5 rounded-xl border transition-all ${
+              selectedPole.brightness > 0
+                ? 'bg-emerald-500/25 text-emerald-300 border-emerald-400/60 hover:bg-emerald-500 hover:text-slate-950 shadow-[0_0_15px_rgba(52,211,153,0.4)]'
+                : 'bg-white/5 text-slate-400 border-white/15 hover:text-white'
+            }`}
+            title={selectedPole.brightness > 0 ? 'Turn Off Node' : 'Turn On Node'}
+          >
+            <Power className="w-4 h-4" />
+          </button>
+
+          {/* Full Diagnostics Modal Trigger */}
+          <button
+            onClick={() => onOpenPoleDetails(selectedPole)}
+            className="liquid-btn bg-white hover:bg-slate-100 text-slate-950 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-md flex items-center gap-1.5 border border-white/80"
+          >
+            <span>Details</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="relative w-full min-h-[calc(100vh-4rem)] lg:h-[calc(100vh-4rem)] overflow-y-auto lg:overflow-hidden flex flex-col lg:flex-row p-3 sm:p-5 lg:p-6 gap-4 sm:gap-6 pb-36 lg:pb-6">
+      {/* Left Column: Interactive Real-Time Map & Controls */}
+      <div className="flex-1 w-full flex flex-col gap-4 lg:h-full shrink-0 lg:shrink min-w-0">
+        {/* Map Container */}
+        <div className="w-full h-[380px] sm:h-[480px] lg:h-full relative rounded-3xl overflow-hidden liquid-frame shadow-2xl flex flex-col border border-white/35">
+          <InteractiveMap
+            poles={poles}
+            faults={faults}
+            selectedPole={selectedPole}
+            onSelectPole={onSelectPole}
+          />
+
+          {/* Desktop Only: Docked Bottom Pole Card */}
+          <div className="hidden lg:block absolute bottom-4 left-4 right-4 z-30 pointer-events-auto">
+            {renderPoleDetailsCard()}
+          </div>
+        </div>
+
+        {/* Mobile & Tablet Only: Stacked Clean Pole Details */}
+        <div className="block lg:hidden w-full">
+          {renderPoleDetailsCard()}
+        </div>
+      </div>
+
+      {/* Right Sidebar Panel: Real-Time Telemetry & Live Alerts */}
+      <aside className="w-full lg:w-80 xl:w-92 shrink-0 h-auto lg:h-full overflow-y-auto liquid-frame p-4 sm:p-5 lg:p-6 flex flex-col gap-5 sm:gap-6 shadow-2xl border border-white/35">
+        <div>
+          <h2 className="text-lg font-bold text-white flex items-center gap-2.5">
+            <Droplets className="w-5 h-5 text-emerald-400 animate-pulse drop-shadow-[0_0_12px_rgba(52,211,153,0.8)]" />
+            <span>Real-Time Telemetry</span>
+          </h2>
+          <p className="text-xs text-slate-300 mt-0.5">Chennai Smart Grid Water Monitor</p>
+        </div>
+
+        {/* Telemetry Stat Cards in Crystal Liquid Glass Frame */}
+        <div className="flex flex-col gap-3">
           {/* Stat Card 1: Active Poles */}
-          <div className="frosted-card rounded-2xl p-4 flex items-center justify-between border border-white/15 hover:border-[#39dcd2]/50 transition-all shadow-md">
+          <div className="liquid-card rounded-2xl p-4 flex items-center justify-between border border-white/25 hover:border-white/60 transition-all shadow-md">
             <div className="flex items-center gap-3.5">
-              <div className="w-11 h-11 rounded-2xl bg-[#00a29a]/20 border border-[#00a29a]/40 flex items-center justify-center text-[#39dcd2] shadow-[0_0_15px_rgba(57,220,210,0.25)]">
+              <div className="w-11 h-11 rounded-2xl bg-white/10 border border-white/30 flex items-center justify-center text-emerald-300 shadow-[0_0_15px_rgba(52,211,153,0.25)]">
                 <Lightbulb className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-xs text-[#c1c6d7]">Active Poles</p>
+                <p className="text-xs text-slate-300">Active Poles</p>
                 <p className="text-xl font-bold text-white tracking-tight">
                   {stats.activePoles.toLocaleString()}
                 </p>
               </div>
             </div>
-            <span className="text-[#39dcd2] text-xs font-semibold bg-[#39dcd2]/15 border border-[#39dcd2]/30 px-2.5 py-1 rounded-full shadow-sm">
+            <span className="text-emerald-300 text-xs font-semibold bg-emerald-500/20 border border-emerald-400/40 px-2.5 py-1 rounded-full shadow-sm">
               +{stats.activePolesDelta} today
             </span>
           </div>
@@ -168,53 +204,56 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
           {/* Stat Card 2: Open Faults */}
           <div 
             onClick={onNavigateToProblems}
-            className="frosted-card rounded-2xl p-4 flex items-center justify-between border-l-4 border-l-[#ffb4ab] border-white/15 hover:border-[#ffb4ab]/50 transition-all cursor-pointer group shadow-md"
+            className="liquid-card rounded-2xl p-4 flex items-center justify-between border-l-4 border-l-rose-500 border-white/20 hover:border-rose-400/70 transition-all cursor-pointer group shadow-md"
           >
             <div className="flex items-center gap-3.5">
-              <div className="w-11 h-11 rounded-2xl bg-[#93000a]/25 border border-[#ffb4ab]/40 flex items-center justify-center text-[#ffb4ab] shadow-[0_0_15px_rgba(255,180,171,0.25)]">
+              <div className="w-11 h-11 rounded-2xl bg-rose-500/20 border border-rose-400/40 flex items-center justify-center text-rose-300 shadow-[0_0_15px_rgba(248,113,113,0.3)]">
                 <AlertOctagon className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-xs text-[#c1c6d7]">Open Faults</p>
-                <p className="text-xl font-bold text-white tracking-tight group-hover:text-[#ffb4ab] transition-colors">
+                <p className="text-xs text-slate-300">Open Faults</p>
+                <p className="text-xl font-bold text-white tracking-tight group-hover:text-rose-300 transition-colors">
                   {stats.openFaults}
                 </p>
               </div>
             </div>
-            <span className="text-xs text-[#ffb4ab] font-semibold bg-[#ffb4ab]/20 border border-[#ffb4ab]/30 px-2.5 py-1 rounded-full shadow-sm">
+            <span className="text-xs text-rose-300 font-semibold bg-rose-500/20 border border-rose-400/40 px-2.5 py-1 rounded-full shadow-sm">
               Action Req.
             </span>
           </div>
 
           {/* Stat Card 3: Technicians Online */}
-          <div className="frosted-card rounded-2xl p-4 flex items-center justify-between border border-white/15 hover:border-[#4b8eff]/50 transition-all shadow-md">
+          <div className="liquid-card rounded-2xl p-4 flex items-center justify-between border border-white/25 hover:border-white/60 transition-all shadow-md">
             <div className="flex items-center gap-3.5">
-              <div className="w-11 h-11 rounded-2xl bg-[#4b8eff]/20 border border-[#4b8eff]/40 flex items-center justify-center text-[#4b8eff] shadow-[0_0_15px_rgba(75,142,255,0.25)]">
+              <div className="w-11 h-11 rounded-2xl bg-white/10 border border-white/30 flex items-center justify-center text-teal-300 shadow-[0_0_15px_rgba(45,212,191,0.25)]">
                 <Users className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-xs text-[#c1c6d7]">Technicians Online</p>
+                <p className="text-xs text-slate-300">Technicians Online</p>
                 <p className="text-xl font-bold text-white tracking-tight">
                   {stats.techniciansOnline}
                 </p>
               </div>
             </div>
-            <span className="text-xs text-[#4b8eff] font-semibold bg-[#4b8eff]/15 border border-[#4b8eff]/30 px-2.5 py-1 rounded-full shadow-sm">
+            <span className="text-xs text-teal-300 font-semibold bg-teal-500/20 border border-teal-400/40 px-2.5 py-1 rounded-full shadow-sm">
               Active Fleet
             </span>
           </div>
         </div>
 
-        {/* Recent Alerts Feed */}
-        <div className="mt-2 flex-1 flex flex-col">
-          <div className="flex items-center justify-between border-b border-white/10 pb-2.5 mb-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#c1c6d7]">
-              Recent Alerts
+        {/* Live Alerts Stream */}
+        <div className="mt-1 flex-1 flex flex-col">
+          <div className="flex items-center justify-between border-b border-white/15 pb-2 mb-3">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-white">
+              Live Alert Stream
             </h3>
-            <span className="text-[10px] text-[#8b90a0] font-mono">LIVE SYNC</span>
+            <span className="text-[10px] text-emerald-400 font-mono font-bold flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+              LIVE TELEMETRY
+            </span>
           </div>
 
-          <div className="space-y-2.5 overflow-y-auto pr-1 flex-1">
+          <div className="space-y-2 overflow-y-auto pr-1 flex-1 max-h-56 lg:max-h-none">
             {alerts.slice(0, 4).map((alert) => (
               <div
                 key={alert.id}
@@ -224,34 +263,35 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
                     if (pole) onSelectPole(pole);
                   }
                 }}
-                className="flex items-start gap-3 p-3 rounded-2xl bg-white/[0.03] hover:bg-white/[0.08] cursor-pointer transition-all border border-white/5 hover:border-white/15 shadow-sm"
+                className="flex items-start gap-3 p-3 rounded-2xl bg-white/[0.06] hover:bg-white/[0.14] cursor-pointer transition-all border border-white/15 hover:border-white/40 shadow-sm"
               >
                 <div className="mt-0.5 shrink-0">
                   {alert.type === 'critical' ? (
-                    <ShieldAlert className="w-4 h-4 text-[#ffb4ab] animate-pulse drop-shadow-[0_0_6px_rgba(255,180,171,0.8)]" />
+                    <ShieldAlert className="w-4 h-4 text-rose-400 animate-pulse drop-shadow-[0_0_6px_rgba(248,113,113,0.8)]" />
                   ) : (
-                    <Zap className="w-4 h-4 text-[#ffda6a] drop-shadow-[0_0_6px_rgba(255,218,106,0.8)]" />
+                    <Zap className="w-4 h-4 text-amber-300 drop-shadow-[0_0_6px_rgba(251,191,36,0.8)]" />
                   )}
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="text-xs font-semibold text-white truncate">{alert.title}</p>
-                  <p className="text-[11px] text-[#c1c6d7] flex items-center gap-1 mt-0.5">
-                    <Clock className="w-3 h-3 text-[#8b90a0]" />
+                  <p className="text-[11px] text-slate-300 flex items-center gap-1 mt-0.5">
+                    <Clock className="w-3 h-3 text-slate-400" />
                     <span>{alert.subtitle}</span>
                   </p>
                 </div>
+                <ChevronRight className="w-3.5 h-3.5 text-slate-400 self-center shrink-0" />
               </div>
             ))}
           </div>
 
-          {/* Quick Dispatch CTA */}
-          <div className="pt-4 border-t border-white/10 mt-auto">
+          {/* Anomaly Dispatch Action */}
+          <div className="pt-3 border-t border-white/15 mt-auto">
             <button
               onClick={onNavigateToReport}
-              className="w-full py-3 rounded-2xl bg-white/[0.06] hover:bg-[#4b8eff]/20 border border-white/15 hover:border-[#4b8eff]/40 text-xs font-semibold text-[#4b8eff] hover:text-white flex items-center justify-center gap-2 transition-all shadow-md frosted-btn"
+              className="w-full py-2.5 rounded-2xl bg-white/15 hover:bg-white/25 border border-white/40 hover:border-white text-xs font-bold text-white flex items-center justify-center gap-2 transition-all shadow-md liquid-btn"
             >
-              <Zap className="w-3.5 h-3.5" />
-              <span>Log Manual Grid Anomaly</span>
+              <Zap className="w-3.5 h-3.5 text-emerald-300" />
+              <span>Report Grid Anomaly</span>
             </button>
           </div>
         </div>
