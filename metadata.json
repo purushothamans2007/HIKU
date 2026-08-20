@@ -1,0 +1,6 @@
+{
+  "name": "Hiku - Street Light Monitoring",
+  "description": "Smart street light monitoring and fault dispatch command system with real-time telemetry and grid intelligence.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
