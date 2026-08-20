@@ -117,8 +117,8 @@ export const ReportFaultScreen: React.FC<ReportFaultScreenProps> = ({
         <span className="text-xs text-[#8b90a0] font-mono">NODE DISPATCH PROTOCOL</span>
       </div>
 
-      {/* Form Container Card (Matching Screenshot 4) */}
-      <div className="w-full max-w-lg glass-panel rounded-2xl p-6 sm:p-8 relative overflow-hidden border border-white/20 shadow-2xl">
+      {/* Form Container Card */}
+      <div className="w-full max-w-lg frosted-panel rounded-3xl p-6 sm:p-8 relative overflow-hidden border border-white/20 shadow-[0_24px_60px_rgba(0,0,0,0.6)]">
         {/* Header */}
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-white tracking-tight mb-1.5">
@@ -138,14 +138,14 @@ export const ReportFaultScreen: React.FC<ReportFaultScreenProps> = ({
             </label>
             <div className="flex gap-2">
               <div className="relative flex-1">
-                <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#c1c6d7]" />
+                <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#adc6ff]" />
                 <input
                   type="text"
                   required
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   placeholder="Enter street address or coordinates"
-                  className="w-full glass-input rounded-xl py-3 pl-10 pr-4 text-white text-sm placeholder-[#c1c6d7]/50 focus:ring-0 focus:outline-none"
+                  className="w-full frosted-input rounded-2xl py-3 pl-10 pr-4 text-white text-sm placeholder-[#c1c6d7]/50 focus:border-[#4b8eff] focus:ring-1 focus:ring-[#4b8eff] focus:outline-none"
                 />
               </div>
               <button
@@ -153,7 +153,7 @@ export const ReportFaultScreen: React.FC<ReportFaultScreenProps> = ({
                 onClick={handleAutoDetectLocation}
                 disabled={isDetectingLocation}
                 title="Auto-detect location from GPS"
-                className="bg-[#343539] hover:bg-[#414755] border border-white/15 rounded-xl px-3.5 flex items-center justify-center transition-colors text-primary"
+                className="frosted-btn bg-white/10 hover:bg-[#4b8eff]/30 border border-white/15 rounded-2xl px-4 flex items-center justify-center transition-all text-[#adc6ff] hover:text-white"
               >
                 <Crosshair className={`w-4 h-4 ${isDetectingLocation ? 'animate-spin' : ''}`} />
               </button>
@@ -170,14 +170,14 @@ export const ReportFaultScreen: React.FC<ReportFaultScreenProps> = ({
               <select
                 value={issueType}
                 onChange={(e) => setIssueType(e.target.value as FaultReport['issueType'])}
-                className="w-full glass-input rounded-xl py-3 px-3.5 text-white text-sm outline-none cursor-pointer bg-[#1e1f23]"
+                className="w-full frosted-input rounded-2xl py-3 px-3.5 text-white text-sm outline-none cursor-pointer"
               >
-                <option value="outage">Complete Outage</option>
-                <option value="flickering">Flickering</option>
-                <option value="dim">Dim Output</option>
-                <option value="damage">Physical Damage</option>
-                <option value="sensor">Sensor Failure</option>
-                <option value="surge">Voltage Surge</option>
+                <option value="outage" className="bg-[#151a26]">Complete Outage</option>
+                <option value="flickering" className="bg-[#151a26]">Flickering</option>
+                <option value="dim" className="bg-[#151a26]">Dim Output</option>
+                <option value="damage" className="bg-[#151a26]">Physical Damage</option>
+                <option value="sensor" className="bg-[#151a26]">Sensor Failure</option>
+                <option value="surge" className="bg-[#151a26]">Voltage Surge</option>
               </select>
             </div>
 
@@ -189,11 +189,11 @@ export const ReportFaultScreen: React.FC<ReportFaultScreenProps> = ({
               <select
                 value={severity}
                 onChange={(e) => setSeverity(e.target.value as SeverityType)}
-                className="w-full glass-input rounded-xl py-3 px-3.5 text-white text-sm outline-none cursor-pointer bg-[#1e1f23]"
+                className="w-full frosted-input rounded-2xl py-3 px-3.5 text-white text-sm outline-none cursor-pointer"
               >
-                <option value="critical">Critical (Immediate)</option>
-                <option value="medium">Medium (Within 4h)</option>
-                <option value="low">Low (Standard)</option>
+                <option value="critical" className="bg-[#151a26]">Critical (Immediate)</option>
+                <option value="medium" className="bg-[#151a26]">Medium (Within 4h)</option>
+                <option value="low" className="bg-[#151a26]">Low (Standard)</option>
               </select>
             </div>
           </div>
@@ -207,12 +207,12 @@ export const ReportFaultScreen: React.FC<ReportFaultScreenProps> = ({
               <select
                 value={zone}
                 onChange={(e) => setZone(e.target.value)}
-                className="w-full glass-input rounded-xl py-2.5 px-3 text-white text-xs outline-none bg-[#1e1f23]"
+                className="w-full frosted-input rounded-2xl py-2.5 px-3 text-white text-xs outline-none"
               >
-                <option value="North Grid">North Grid</option>
-                <option value="Central Grid">Central Grid</option>
-                <option value="South Sector">South Sector</option>
-                <option value="East Node">East Node</option>
+                <option value="North Grid" className="bg-[#151a26]">North Grid</option>
+                <option value="Central Grid" className="bg-[#151a26]">Central Grid</option>
+                <option value="South Sector" className="bg-[#151a26]">South Sector</option>
+                <option value="East Node" className="bg-[#151a26]">East Node</option>
               </select>
             </div>
 
@@ -223,10 +223,10 @@ export const ReportFaultScreen: React.FC<ReportFaultScreenProps> = ({
               <select
                 value={ward}
                 onChange={(e) => setWard(e.target.value)}
-                className="w-full glass-input rounded-xl py-2.5 px-3 text-white text-xs outline-none bg-[#1e1f23]"
+                className="w-full frosted-input rounded-2xl py-2.5 px-3 text-white text-xs outline-none"
               >
-                <option value="Ward 12">Ward 12</option>
-                <option value="Ward 45">Ward 45</option>
+                <option value="Ward 12" className="bg-[#151a26]">Ward 12</option>
+                <option value="Ward 45" className="bg-[#151a26]">Ward 45</option>
               </select>
             </div>
           </div>
@@ -241,16 +241,16 @@ export const ReportFaultScreen: React.FC<ReportFaultScreenProps> = ({
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Provide any additional details about the fault..."
-              className="w-full glass-input rounded-xl py-2.5 px-3.5 text-white text-sm placeholder-[#c1c6d7]/50 focus:ring-0 focus:outline-none resize-none"
+              className="w-full frosted-input rounded-2xl py-2.5 px-3.5 text-white text-sm placeholder-[#c1c6d7]/50 focus:border-[#4b8eff] focus:ring-1 focus:ring-[#4b8eff] focus:outline-none resize-none"
             />
           </div>
 
-          {/* Photo Evidence Upload Box (Matching Screenshot 4) */}
+          {/* Photo Evidence Upload Box */}
           <div className="flex flex-col gap-1.5">
             <label className="text-[11px] font-bold text-[#c1c6d7] uppercase tracking-wider">
               Photo Evidence
             </label>
-            <label className="border border-dashed border-white/20 rounded-xl p-5 flex flex-col items-center justify-center gap-2 bg-[#121317]/40 hover:bg-[#121317]/70 transition-all cursor-pointer group relative overflow-hidden">
+            <label className="border border-dashed border-white/25 rounded-2xl p-5 flex flex-col items-center justify-center gap-2 bg-white/[0.03] hover:bg-white/[0.08] transition-all cursor-pointer group relative overflow-hidden">
               <input
                 type="file"
                 accept="image/*"
@@ -258,23 +258,23 @@ export const ReportFaultScreen: React.FC<ReportFaultScreenProps> = ({
                 className="hidden"
               />
               {photoPreview ? (
-                <div className="relative w-full h-28 rounded-lg overflow-hidden flex items-center justify-center bg-black/40">
+                <div className="relative w-full h-28 rounded-xl overflow-hidden flex items-center justify-center bg-black/40">
                   <img
                     src={photoPreview}
                     alt="Uploaded Evidence"
-                    className="w-full h-full object-cover rounded-lg"
+                    className="w-full h-full object-cover rounded-xl"
                   />
-                  <span className="absolute bottom-1 right-1 bg-black/70 text-white text-[10px] px-2 py-0.5 rounded">
+                  <span className="absolute bottom-1.5 right-1.5 bg-black/70 backdrop-blur-md text-white text-[10px] px-2.5 py-1 rounded-full">
                     Change Image
                   </span>
                 </div>
               ) : (
                 <>
-                  <div className="h-11 w-11 rounded-full bg-[#343539] flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Camera className="w-5 h-5 text-primary" />
+                  <div className="h-11 w-11 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center group-hover:scale-110 transition-transform shadow-md">
+                    <Camera className="w-5 h-5 text-[#adc6ff]" />
                   </div>
                   <div className="text-center">
-                    <p className="text-xs font-semibold text-primary">Click to upload or drag & drop</p>
+                    <p className="text-xs font-semibold text-[#adc6ff]">Click to upload or drag & drop</p>
                     <p className="text-[11px] text-[#8b90a0] mt-0.5">SVG, PNG, JPG or GIF (max. 5MB)</p>
                   </div>
                 </>
@@ -282,12 +282,12 @@ export const ReportFaultScreen: React.FC<ReportFaultScreenProps> = ({
             </label>
           </div>
 
-          {/* Submit Action Button (Matching Screenshot 4) */}
+          {/* Submit Action Button */}
           <div className="pt-2">
             <button
               type="submit"
               disabled={isTransmitting}
-              className="liquid-btn w-full bg-[#4b8eff] hover:bg-[#005bc1] text-white font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-[#4b8eff]/30 transition-all cursor-pointer"
+              className="frosted-btn w-full bg-[#4b8eff] hover:bg-[#6ba3ff] text-white font-bold py-3.5 rounded-2xl flex items-center justify-center gap-2 shadow-[0_4px_24px_rgba(75,142,255,0.4)] border border-white/30 transition-all cursor-pointer"
             >
               {isTransmitting ? (
                 <>
@@ -304,28 +304,28 @@ export const ReportFaultScreen: React.FC<ReportFaultScreenProps> = ({
           </div>
         </form>
 
-        {/* Success Overlay (Matching Screenshot 4) */}
+        {/* Success Overlay */}
         {generatedTicket && (
-          <div className="absolute inset-0 bg-[#121317]/95 backdrop-blur-2xl flex flex-col items-center justify-center p-6 text-center z-30 animate-in fade-in zoom-in-95 duration-300">
-            <div className="h-20 w-20 rounded-full bg-[#00a29a]/20 border border-[#39dcd2]/40 flex items-center justify-center mb-5 glow-pulse-green">
+          <div className="absolute inset-0 bg-[#0b0d13]/90 backdrop-blur-2xl flex flex-col items-center justify-center p-6 text-center z-30 animate-in fade-in zoom-in-95 duration-300">
+            <div className="h-20 w-20 rounded-full bg-[#00a29a]/25 border border-[#39dcd2]/50 flex items-center justify-center mb-5 shadow-[0_0_24px_rgba(57,220,210,0.5)]">
               <Check className="w-10 h-10 text-[#39dcd2]" />
             </div>
 
             <h2 className="text-2xl font-bold text-white mb-2">Fault Reported</h2>
             <p className="text-sm text-[#c1c6d7] max-w-xs mb-6">
-              Ticket <span className="font-mono font-bold text-primary">#{generatedTicket}</span> has been generated and dispatched to the maintenance grid.
+              Ticket <span className="font-mono font-bold text-[#adc6ff]">#{generatedTicket}</span> has been generated and dispatched to the maintenance grid.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 w-full max-w-xs">
               <button
                 onClick={resetForm}
-                className="flex-1 py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-semibold transition-all"
+                className="flex-1 py-3 px-4 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/15 text-white text-xs font-semibold transition-all frosted-btn"
               >
                 + Report Another
               </button>
               <button
                 onClick={onNavigateToProblems}
-                className="flex-1 py-2.5 px-4 rounded-xl bg-primary hover:bg-[#d8e2ff] text-[#001a41] text-xs font-bold transition-all shadow-md"
+                className="flex-1 py-3 px-4 rounded-2xl bg-[#4b8eff] hover:bg-[#6ba3ff] text-white text-xs font-bold transition-all shadow-[0_4px_16px_rgba(75,142,255,0.4)] border border-white/30 frosted-btn"
               >
                 View in Directory
               </button>

@@ -85,20 +85,41 @@ void main() {
     uv += n * 0.05;
     
     // Base colors
-    vec3 darkNavy = vec3(0.039, 0.047, 0.063); // #0A0C10
-    vec3 midnightBlue = vec3(0.11, 0.11, 0.117); // #1C1C1E
-    vec3 accent = vec3(0.0, 0.478, 1.0); // #007AFF
+    vec3 deepBackground = vec3(0.043, 0.051, 0.075); // #0B0D13
+    vec3 midnightNavy   = vec3(0.082, 0.102, 0.149); // #151A26
+    vec3 cyanGlow       = vec3(0.224, 0.863, 0.824); // #39dcd2
+    vec3 blueGlow       = vec3(0.294, 0.557, 1.000); // #4b8eff
+    vec3 amberGlow      = vec3(1.000, 0.855, 0.416); // #ffda6a
+    vec3 violetGlow     = vec3(0.557, 0.353, 1.000); // #8e5aff
     
-    float f = 0.5 + 0.5 * noise(vec3(uv * 2.0, u_time * 0.1));
-    vec3 color = mix(darkNavy, midnightBlue, f);
+    // Wave 1: Slow sweeping deep current
+    float f1 = 0.5 + 0.5 * noise(vec3(uv * 1.5, u_time * 0.08));
+    vec3 color = mix(deepBackground, midnightNavy, f1);
     
-    // Add a soft glow near the mouse
+    // Wave 2: Cyan & Azure light currents
+    float f2 = smoothstep(0.35, 0.85, noise(vec3(uv * 2.2 + vec2(0.3, -0.2), u_time * 0.12)));
+    color += blueGlow * f2 * 0.18;
+    
+    // Wave 3: Cyan stream
+    float f3 = smoothstep(0.4, 0.9, noise(vec3(uv * 2.8 - vec2(0.5, 0.4), u_time * 0.15)));
+    color += cyanGlow * f3 * 0.14;
+
+    // Wave 4: Subtle violet aurora top-right
+    float f4 = smoothstep(0.45, 0.95, noise(vec3((uv - vec2(0.8, 0.8)) * 2.0, u_time * 0.1)));
+    color += violetGlow * f4 * 0.12;
+
+    // Wave 5: Soft amber streetlight reflection lower-center
+    float f5 = smoothstep(0.5, 0.98, noise(vec3((uv - vec2(0.4, 0.1)) * 3.0, u_time * 0.09)));
+    color += amberGlow * f5 * 0.08;
+    
+    // Interactive dynamic mouse light
     float d = distance(v_texCoord, m);
-    color += accent * (1.0 - smoothstep(0.0, 0.8, d)) * 0.15;
+    color += blueGlow * (1.0 - smoothstep(0.0, 0.75, d)) * 0.22;
+    color += cyanGlow * (1.0 - smoothstep(0.0, 0.35, d)) * 0.12;
     
-    // Shimmer highlight
-    float shimmer = smoothstep(0.4, 0.41, noise(vec3(uv * 10.0, u_time * 0.5)));
-    color += vec3(1.0) * shimmer * 0.03;
+    // Fine specular frosted grain / glass shimmer
+    float shimmer = smoothstep(0.48, 0.52, noise(vec3(uv * 16.0, u_time * 0.4)));
+    color += vec3(1.0) * shimmer * 0.025;
     
     gl_FragColor = vec4(color, 1.0);
 }`;

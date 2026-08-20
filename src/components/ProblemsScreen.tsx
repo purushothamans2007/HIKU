@@ -69,18 +69,18 @@ export const ProblemsScreen: React.FC<ProblemsScreenProps> = ({
         </div>
       </div>
 
-      {/* Filters Section: Glassmorphic Pill Container (Matching Screenshot 2) */}
-      <div className="glass-panel rounded-2xl p-4 sm:p-5 mb-8 flex flex-col md:flex-row gap-4 items-center justify-between border border-white/15 shadow-xl">
+      {/* Filters Section: Frosted Pill Container */}
+      <div className="frosted-panel rounded-3xl p-4 sm:p-5 mb-8 flex flex-col md:flex-row gap-4 items-center justify-between border border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.5)]">
         {/* Severity Selector */}
         <div className="flex flex-wrap gap-2 items-center w-full md:w-auto">
           <span className="text-xs sm:text-sm text-[#c1c6d7] mr-2 font-medium">Severity:</span>
           
           <button
             onClick={() => setSelectedSeverity('all')}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+            className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${
               selectedSeverity === 'all'
-                ? 'bg-primary text-[#001a41] shadow-md'
-                : 'bg-[#343539] text-[#c1c6d7] border border-white/10 hover:text-white'
+                ? 'bg-[#4b8eff] text-white shadow-[0_4px_16px_rgba(75,142,255,0.4)] border border-white/40 font-bold'
+                : 'bg-white/[0.06] text-[#c1c6d7] border border-white/10 hover:text-white hover:bg-white/[0.1]'
             }`}
           >
             All ({faults.length})
@@ -88,10 +88,10 @@ export const ProblemsScreen: React.FC<ProblemsScreenProps> = ({
 
           <button
             onClick={() => setSelectedSeverity('critical')}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+            className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${
               selectedSeverity === 'critical'
-                ? 'bg-[#ffb4ab]/25 text-[#ffb4ab] border border-[#ffb4ab]/50 shadow-md ring-1 ring-[#ffb4ab]/30'
-                : 'bg-[#ffb4ab]/10 text-[#ffb4ab] border border-[#ffb4ab]/20 hover:bg-[#ffb4ab]/20'
+                ? 'bg-[#ffb4ab]/30 text-[#ffb4ab] border border-[#ffb4ab]/60 shadow-[0_0_16px_rgba(255,180,171,0.35)] ring-1 ring-[#ffb4ab]/40 font-bold'
+                : 'bg-[#ffb4ab]/10 text-[#ffb4ab] border border-[#ffb4ab]/25 hover:bg-[#ffb4ab]/20'
             }`}
           >
             Critical
@@ -99,10 +99,10 @@ export const ProblemsScreen: React.FC<ProblemsScreenProps> = ({
 
           <button
             onClick={() => setSelectedSeverity('medium')}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+            className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${
               selectedSeverity === 'medium'
-                ? 'bg-[#7fd0ff]/25 text-[#7fd0ff] border border-[#7fd0ff]/50 shadow-md ring-1 ring-[#7fd0ff]/30'
-                : 'bg-[#7fd0ff]/10 text-[#7fd0ff] border border-[#7fd0ff]/20 hover:bg-[#7fd0ff]/20'
+                ? 'bg-[#7fd0ff]/30 text-[#7fd0ff] border border-[#7fd0ff]/60 shadow-[0_0_16px_rgba(127,208,255,0.35)] ring-1 ring-[#7fd0ff]/40 font-bold'
+                : 'bg-[#7fd0ff]/10 text-[#7fd0ff] border border-[#7fd0ff]/25 hover:bg-[#7fd0ff]/20'
             }`}
           >
             Medium
@@ -110,10 +110,10 @@ export const ProblemsScreen: React.FC<ProblemsScreenProps> = ({
 
           <button
             onClick={() => setSelectedSeverity('low')}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+            className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${
               selectedSeverity === 'low'
-                ? 'bg-[#343539] text-white border border-white/30 shadow-md'
-                : 'bg-[#343539]/60 text-[#c1c6d7] border border-white/10 hover:bg-[#343539]'
+                ? 'bg-white/20 text-white border border-white/40 shadow-md font-bold'
+                : 'bg-white/[0.06] text-[#c1c6d7] border border-white/10 hover:bg-white/[0.12]'
             }`}
           >
             Low
@@ -127,13 +127,13 @@ export const ProblemsScreen: React.FC<ProblemsScreenProps> = ({
             <select
               value={selectedZone}
               onChange={(e) => setSelectedZone(e.target.value)}
-              className="bg-[#1e1f23] text-white text-xs sm:text-sm rounded-xl border border-white/15 focus:border-primary focus:ring-1 focus:ring-primary py-2 px-3 outline-none cursor-pointer"
+              className="frosted-input text-white text-xs sm:text-sm rounded-2xl border border-white/15 focus:border-[#4b8eff] focus:ring-1 focus:ring-[#4b8eff] py-2 px-3.5 outline-none cursor-pointer"
             >
-              <option value="All Zones">All Zones</option>
-              <option value="North Grid">North Grid</option>
-              <option value="Central Grid">Central Grid</option>
-              <option value="South Sector">South Sector</option>
-              <option value="East Node">East Node</option>
+              <option value="All Zones" className="bg-[#151a26]">All Zones</option>
+              <option value="North Grid" className="bg-[#151a26]">North Grid</option>
+              <option value="Central Grid" className="bg-[#151a26]">Central Grid</option>
+              <option value="South Sector" className="bg-[#151a26]">South Sector</option>
+              <option value="East Node" className="bg-[#151a26]">East Node</option>
             </select>
           </div>
 
@@ -141,28 +141,28 @@ export const ProblemsScreen: React.FC<ProblemsScreenProps> = ({
             <select
               value={selectedWard}
               onChange={(e) => setSelectedWard(e.target.value)}
-              className="bg-[#1e1f23] text-white text-xs sm:text-sm rounded-xl border border-white/15 focus:border-primary focus:ring-1 focus:ring-primary py-2 px-3 outline-none cursor-pointer"
+              className="frosted-input text-white text-xs sm:text-sm rounded-2xl border border-white/15 focus:border-[#4b8eff] focus:ring-1 focus:ring-[#4b8eff] py-2 px-3.5 outline-none cursor-pointer"
             >
-              <option value="All Wards">All Wards</option>
-              <option value="Ward 12">Ward 12</option>
-              <option value="Ward 45">Ward 45</option>
+              <option value="All Wards" className="bg-[#151a26]">All Wards</option>
+              <option value="Ward 12" className="bg-[#151a26]">Ward 12</option>
+              <option value="Ward 45" className="bg-[#151a26]">Ward 45</option>
             </select>
           </div>
 
           <button
             onClick={onNavigateToReport}
-            className="ml-2 liquid-btn bg-primary hover:bg-[#d8e2ff] text-[#001a41] px-3.5 py-2 rounded-xl text-xs font-bold shrink-0 flex items-center gap-1.5 shadow-md"
+            className="ml-2 frosted-btn bg-[#4b8eff] hover:bg-[#6ba3ff] text-white px-4 py-2 rounded-2xl text-xs font-bold shrink-0 flex items-center gap-1.5 shadow-[0_4px_20px_rgba(75,142,255,0.4)] border border-white/30"
           >
-            <PlusCircle className="w-3.5 h-3.5" />
+            <PlusCircle className="w-4 h-4" />
             <span>New Report</span>
           </button>
         </div>
       </div>
 
-      {/* Issues Grid (Matching Screenshot 2) */}
+      {/* Issues Grid */}
       {filteredFaults.length === 0 ? (
-        <div className="glass-panel rounded-2xl p-12 text-center flex flex-col items-center justify-center">
-          <CheckCircle2 className="w-12 h-12 text-[#39dcd2] mb-3" />
+        <div className="frosted-panel rounded-3xl p-12 text-center flex flex-col items-center justify-center border border-white/20">
+          <CheckCircle2 className="w-12 h-12 text-[#39dcd2] mb-3 drop-shadow-[0_0_12px_rgba(57,220,210,0.6)]" />
           <h3 className="text-lg font-bold text-white">No Matching Faults Detected</h3>
           <p className="text-sm text-[#c1c6d7] max-w-md mt-1">
             All street light nodes within the selected filters are operating within nominal parameters.
@@ -177,28 +177,28 @@ export const ProblemsScreen: React.FC<ProblemsScreenProps> = ({
             return (
               <div
                 key={fault.id}
-                className="glass-card rounded-2xl p-6 flex flex-col relative overflow-hidden group border border-white/15 hover:border-white/30 transition-all duration-300"
+                className="frosted-card rounded-3xl p-6 flex flex-col relative overflow-hidden group border border-white/15 hover:border-white/35 transition-all duration-300 shadow-[0_12px_36px_rgba(0,0,0,0.45)]"
               >
                 {/* Top Glowing Color Accent Stripe */}
                 <div
                   className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${
                     isCritical
-                      ? 'from-[#ffb4ab] to-[#ffb4ab]/10'
+                      ? 'from-[#ffb4ab] via-[#ffb4ab] to-transparent'
                       : isMedium
-                      ? 'from-[#7fd0ff] to-[#7fd0ff]/10'
-                      : 'from-[#343539] to-transparent'
+                      ? 'from-[#7fd0ff] via-[#7fd0ff] to-transparent'
+                      : 'from-white/30 to-transparent'
                   }`}
                 />
 
                 {/* Card Header: Severity Badge + ID Tag */}
                 <div className="flex justify-between items-start mb-4">
                   <div
-                    className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wider border ${
+                    className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border ${
                       isCritical
-                        ? 'bg-[#ffb4ab]/15 border-[#ffb4ab]/30 text-[#ffb4ab] glow-critical'
+                        ? 'bg-[#ffb4ab]/20 border-[#ffb4ab]/40 text-[#ffb4ab] shadow-[0_0_12px_rgba(255,180,171,0.3)]'
                         : isMedium
-                        ? 'bg-[#7fd0ff]/15 border-[#7fd0ff]/30 text-[#7fd0ff]'
-                        : 'bg-[#343539] border-white/15 text-[#c1c6d7]'
+                        ? 'bg-[#7fd0ff]/20 border-[#7fd0ff]/40 text-[#7fd0ff] shadow-[0_0_12px_rgba(127,208,255,0.3)]'
+                        : 'bg-white/10 border-white/20 text-[#c1c6d7]'
                     }`}
                   >
                     {isCritical ? (
@@ -211,17 +211,17 @@ export const ProblemsScreen: React.FC<ProblemsScreenProps> = ({
                     <span>{fault.severity}</span>
                   </div>
 
-                  <span className="text-xs text-[#c1c6d7] font-mono bg-[#1e1f23] px-2.5 py-1 rounded-lg border border-white/10">
+                  <span className="text-xs text-[#c1c6d7] font-mono bg-black/40 px-3 py-1 rounded-full border border-white/10">
                     {fault.id}
                   </span>
                 </div>
 
                 {/* Title & Location */}
-                <h3 className="text-lg font-bold text-white mb-1 group-hover:text-primary transition-colors">
+                <h3 className="text-lg font-bold text-white mb-1 group-hover:text-[#4b8eff] transition-colors">
                   {fault.title}
                 </h3>
                 <div className="flex items-center text-[#c1c6d7] text-xs sm:text-sm mb-4">
-                  <MapPin className="w-3.5 h-3.5 mr-1.5 text-primary shrink-0" />
+                  <MapPin className="w-3.5 h-3.5 mr-1.5 text-[#4b8eff] shrink-0" />
                   <span className="truncate">{fault.location}</span>
                 </div>
 
@@ -230,16 +230,16 @@ export const ProblemsScreen: React.FC<ProblemsScreenProps> = ({
                   {fault.description}
                 </p>
 
-                {/* Card Footer: Timestamp + View Details Liquid Button */}
+                {/* Card Footer: Timestamp + View Details Button */}
                 <div className="mt-auto pt-4 border-t border-white/10 flex justify-between items-center">
-                  <span className="text-xs text-[#8b90a0] flex items-center gap-1">
-                    <Clock className="w-3 h-3" />
+                  <span className="text-xs text-[#8b90a0] flex items-center gap-1 font-medium">
+                    <Clock className="w-3.5 h-3.5" />
                     Reported: {fault.reportedTime}
                   </span>
 
                   <button
                     onClick={() => onOpenFaultDetails(fault)}
-                    className="liquid-btn bg-[#343539] hover:bg-[#4b8eff] text-primary hover:text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-white/10 hover:border-[#4b8eff] transition-all shadow"
+                    className="frosted-btn bg-white/10 hover:bg-[#4b8eff] text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-white/20 hover:border-[#4b8eff] transition-all shadow-md"
                   >
                     View Details
                   </button>

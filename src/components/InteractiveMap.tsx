@@ -145,14 +145,14 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
       {/* Hover Card Preview */}
       {hoveredPole && (
         <div 
-          className="absolute z-40 top-4 left-4 glass-card p-3 rounded-xl max-w-xs pointer-events-none border border-white/20 shadow-2xl transition-all"
+          className="absolute z-40 top-4 left-4 frosted-card p-3.5 rounded-2xl max-w-xs pointer-events-none border border-white/25 shadow-[0_16px_36px_rgba(0,0,0,0.7)] transition-all animate-in fade-in zoom-in-95 duration-150"
         >
           <div className="flex items-center justify-between gap-2 mb-1">
-            <span className="font-mono text-xs font-bold text-primary">{hoveredPole.id}</span>
-            <span className={`text-[10px] font-bold uppercase px-1.5 py-0.5 rounded ${
-              hoveredPole.status === 'active' ? 'bg-[#39dcd2]/20 text-[#39dcd2]' :
-              hoveredPole.status === 'warning' ? 'bg-[#ffda6a]/20 text-[#ffda6a]' :
-              'bg-[#ffb4ab]/20 text-[#ffb4ab]'
+            <span className="font-mono text-xs font-bold text-[#adc6ff]">{hoveredPole.id}</span>
+            <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full border ${
+              hoveredPole.status === 'active' ? 'bg-[#39dcd2]/20 text-[#39dcd2] border-[#39dcd2]/30' :
+              hoveredPole.status === 'warning' ? 'bg-[#ffda6a]/20 text-[#ffda6a] border-[#ffda6a]/30' :
+              'bg-[#ffb4ab]/20 text-[#ffb4ab] border-[#ffb4ab]/30'
             }`}>
               {hoveredPole.status}
             </span>
@@ -162,19 +162,21 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
             <div>Power: <span className="text-white font-medium">{hoveredPole.powerDraw}W</span></div>
             <div>Lux: <span className="text-white font-medium">{hoveredPole.ambientLux} lx</span></div>
             <div>Temp: <span className="text-white font-medium">{hoveredPole.temperature}°C</span></div>
-            <div>Ping: <span className="text-white font-medium">{hoveredPole.lastPing}</span></div>
+            <div>Ping: <span className="text-[#39dcd2] font-semibold">{hoveredPole.lastPing}</span></div>
           </div>
         </div>
       )}
 
       {/* Floating Map Controls (Top Right) */}
-      <div className="absolute top-4 right-4 z-30 flex flex-col gap-2">
+      <div className="absolute top-4 right-4 z-30 flex flex-col gap-2.5">
         {/* Layer Selector */}
-        <div className="glass-panel p-1.5 rounded-xl flex items-center gap-1">
+        <div className="frosted-panel p-1.5 rounded-2xl flex items-center gap-1.5 border border-white/20 shadow-lg">
           <button
             onClick={() => setActiveLayer('all')}
-            className={`px-2.5 py-1 text-xs rounded-lg font-medium transition-all ${
-              activeLayer === 'all' ? 'bg-primary text-[#001a41] shadow' : 'text-[#c1c6d7] hover:text-white'
+            className={`px-3 py-1.5 text-xs rounded-xl font-medium transition-all frosted-btn ${
+              activeLayer === 'all' 
+                ? 'bg-[#4b8eff] text-white font-bold shadow-[0_4px_16px_rgba(75,142,255,0.4)] border border-white/30' 
+                : 'text-[#c1c6d7] hover:text-white hover:bg-white/[0.06]'
             }`}
             title="All Poles"
           >
@@ -182,45 +184,49 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
           </button>
           <button
             onClick={() => setActiveLayer('faults')}
-            className={`px-2.5 py-1 text-xs rounded-lg font-medium transition-all flex items-center gap-1 ${
-              activeLayer === 'faults' ? 'bg-[#ffb4ab] text-[#690005] font-bold shadow' : 'text-[#ffb4ab] hover:bg-[#ffb4ab]/10'
+            className={`px-3 py-1.5 text-xs rounded-xl font-medium transition-all flex items-center gap-1.5 frosted-btn ${
+              activeLayer === 'faults' 
+                ? 'bg-[#ffb4ab] text-[#690005] font-bold shadow-[0_4px_16px_rgba(255,180,171,0.4)] border border-white/30' 
+                : 'text-[#ffb4ab] hover:bg-[#ffb4ab]/15'
             }`}
             title="Only Anomalies"
           >
-            <AlertTriangle className="w-3 h-3" />
+            <AlertTriangle className="w-3.5 h-3.5" />
             Alerts
           </button>
           <button
             onClick={() => setActiveLayer('solar')}
-            className={`px-2.5 py-1 text-xs rounded-lg font-medium transition-all flex items-center gap-1 ${
-              activeLayer === 'solar' ? 'bg-[#39dcd2] text-[#003734] font-bold shadow' : 'text-[#39dcd2] hover:bg-[#39dcd2]/10'
+            className={`px-3 py-1.5 text-xs rounded-xl font-medium transition-all flex items-center gap-1.5 frosted-btn ${
+              activeLayer === 'solar' 
+                ? 'bg-[#39dcd2] text-[#003734] font-bold shadow-[0_4px_16px_rgba(57,220,210,0.4)] border border-white/30' 
+                : 'text-[#39dcd2] hover:bg-[#39dcd2]/15'
             }`}
             title="Solar Enabled"
           >
-            <Sun className="w-3 h-3" />
+            <Sun className="w-3.5 h-3.5" />
             Solar
           </button>
         </div>
 
         {/* Zoom & Reset Controls */}
-        <div className="glass-panel p-1 rounded-xl flex flex-col gap-1 self-end">
+        <div className="frosted-panel p-1.5 rounded-2xl flex flex-col gap-1.5 self-end border border-white/20 shadow-lg">
           <button
             onClick={() => setZoomLevel(prev => Math.min(prev + 0.2, 1.8))}
-            className="p-2 text-[#c1c6d7] hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+            className="p-2.5 text-[#c1c6d7] hover:text-white hover:bg-white/10 rounded-xl transition-all frosted-btn"
             title="Zoom In"
           >
             <ZoomIn className="w-4 h-4" />
           </button>
           <button
             onClick={() => setZoomLevel(prev => Math.max(prev - 0.2, 0.8))}
-            className="p-2 text-[#c1c6d7] hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+            className="p-2.5 text-[#c1c6d7] hover:text-white hover:bg-white/10 rounded-xl transition-all frosted-btn"
             title="Zoom Out"
           >
             <ZoomOut className="w-4 h-4" />
           </button>
           <button
             onClick={() => setZoomLevel(1)}
-            className="p-2 text-[#c1c6d7] hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+            className="p-2.5 text-[#c1c6d7] hover:text-white hover:bg-white/10 rounded-xl transition-all frosted-btn"
             title="Reset View"
           >
             <Navigation className="w-4 h-4" />
@@ -229,17 +235,17 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({
       </div>
 
       {/* Live Map Legend & Status (Bottom Left) */}
-      <div className="absolute bottom-4 left-4 z-30 hidden sm:flex items-center gap-3 glass-panel px-3 py-1.5 rounded-full text-xs text-[#c1c6d7]">
-        <div className="flex items-center gap-1.5">
-          <div className="w-2.5 h-2.5 rounded-full bg-[#39dcd2]" />
+      <div className="absolute bottom-4 left-4 z-30 hidden sm:flex items-center gap-3.5 frosted-panel px-4 py-2 rounded-full text-xs text-[#c1c6d7] border border-white/20 shadow-lg">
+        <div className="flex items-center gap-2">
+          <div className="w-2.5 h-2.5 rounded-full bg-[#39dcd2] shadow-[0_0_8px_rgba(57,220,210,0.8)]" />
           <span>Nominal</span>
         </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-2.5 h-2.5 rounded-full bg-[#ffda6a]" />
+        <div className="flex items-center gap-2">
+          <div className="w-2.5 h-2.5 rounded-full bg-[#ffda6a] shadow-[0_0_8px_rgba(255,218,106,0.8)]" />
           <span>Warning / High Draw</span>
         </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-2.5 h-2.5 rounded-full bg-[#ffb4ab]" />
+        <div className="flex items-center gap-2">
+          <div className="w-2.5 h-2.5 rounded-full bg-[#ffb4ab] shadow-[0_0_8px_rgba(255,180,171,0.8)]" />
           <span>Critical / Fault</span>
         </div>
       </div>

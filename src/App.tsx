@@ -12,6 +12,7 @@ import {
   INITIAL_ALERTS, 
   INITIAL_STATS 
 } from './data/mockData';
+import { LiquidShaderBackground } from './components/LiquidShaderBackground';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { MobileNavBar } from './components/MobileNavBar';
@@ -172,7 +173,15 @@ export default function App() {
   const openFaultCount = faults.filter((f) => f.status !== 'Resolved').length;
 
   return (
-    <div className="min-h-screen bg-[#121317] text-[#e3e2e7] flex flex-col font-sans selection:bg-[#4b8eff] selection:text-[#00285c]">
+    <div className="min-h-screen bg-[#0b0d13] text-[#e3e2e7] flex flex-col font-sans selection:bg-[#4b8eff] selection:text-[#00285c] relative overflow-hidden">
+      {/* Background Liquid GL Shader for Frosted Refraction */}
+      <LiquidShaderBackground opacity={0.75} />
+
+      {/* Ambient Floating Glow Orbs */}
+      <div className="ambient-glow-orb-blue w-[600px] h-[600px] -top-32 -left-32" />
+      <div className="ambient-glow-orb-cyan w-[500px] h-[500px] top-1/3 -right-24" />
+      <div className="ambient-glow-orb-violet w-[550px] h-[550px] -bottom-32 left-1/4" />
+
       {/* Top Header */}
       <Header
         notifications={alerts}

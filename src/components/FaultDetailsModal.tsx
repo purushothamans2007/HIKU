@@ -29,26 +29,26 @@ export const FaultDetailsModal: React.FC<FaultDetailsModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="w-full max-w-xl glass-panel rounded-3xl p-6 sm:p-8 border border-white/20 shadow-2xl relative overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/65 backdrop-blur-xl animate-in fade-in duration-200">
+      <div className="w-full max-w-xl frosted-panel rounded-3xl p-6 sm:p-8 border border-white/20 shadow-[0_32px_80px_rgba(0,0,0,0.8)] relative overflow-hidden flex flex-col max-h-[90vh]">
         {/* Top Accent */}
         <div className={`absolute top-0 left-0 right-0 h-1.5 ${
           fault.severity === 'critical' ? 'bg-[#ffb4ab]' :
-          fault.severity === 'medium' ? 'bg-[#7fd0ff]' : 'bg-[#343539]'
+          fault.severity === 'medium' ? 'bg-[#7fd0ff]' : 'bg-white/30'
         }`} />
 
         {/* Modal Header */}
         <div className="flex items-start justify-between pb-4 border-b border-white/10">
           <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="font-mono text-xs font-bold text-primary px-2 py-0.5 rounded bg-primary/10 border border-primary/20">
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className="font-mono text-xs font-bold text-[#adc6ff] px-2.5 py-0.5 rounded-full bg-[#4b8eff]/15 border border-[#4b8eff]/30">
                 {fault.id}
               </span>
-              <span className="font-mono text-xs text-[#8b90a0]">Ticket: {fault.ticketNumber}</span>
-              <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full ${
-                fault.severity === 'critical' ? 'bg-[#ffb4ab]/20 text-[#ffb4ab]' :
-                fault.severity === 'medium' ? 'bg-[#7fd0ff]/20 text-[#7fd0ff]' :
-                'bg-white/10 text-[#c1c6d7]'
+              <span className="font-mono text-xs text-[#8b90a0]">Ticket: #{fault.ticketNumber}</span>
+              <span className={`text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full border ${
+                fault.severity === 'critical' ? 'bg-[#ffb4ab]/20 text-[#ffb4ab] border-[#ffb4ab]/30' :
+                fault.severity === 'medium' ? 'bg-[#7fd0ff]/20 text-[#7fd0ff] border-[#7fd0ff]/30' :
+                'bg-white/10 text-[#c1c6d7] border-white/20'
               }`}>
                 {fault.severity}
               </span>
@@ -60,7 +60,7 @@ export const FaultDetailsModal: React.FC<FaultDetailsModalProps> = ({
 
           <button
             onClick={onClose}
-            className="p-1.5 text-[#c1c6d7] hover:text-white hover:bg-white/10 rounded-full transition-colors"
+            className="p-2 text-[#c1c6d7] hover:text-white hover:bg-white/10 rounded-full transition-all frosted-btn"
           >
             <X className="w-5 h-5" />
           </button>
@@ -69,11 +69,11 @@ export const FaultDetailsModal: React.FC<FaultDetailsModalProps> = ({
         {/* Modal Body */}
         <div className="py-4 space-y-5 overflow-y-auto pr-1">
           {/* Location & Metadata */}
-          <div className="glass-card rounded-xl p-4 border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="frosted-card rounded-2xl p-4 border border-white/15 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md">
             <div>
               <p className="text-xs text-[#8b90a0]">Fault Location</p>
               <p className="text-sm font-semibold text-white flex items-center gap-1.5 mt-0.5">
-                <MapPin className="w-4 h-4 text-primary shrink-0" />
+                <MapPin className="w-4 h-4 text-[#4b8eff] shrink-0" />
                 <span>{fault.location} ({fault.zone})</span>
               </p>
               <p className="text-xs text-[#c1c6d7] mt-0.5">{fault.ward}</p>
@@ -85,7 +85,7 @@ export const FaultDetailsModal: React.FC<FaultDetailsModalProps> = ({
                   onClose();
                   onNavigateToPole?.(fault.poleId!);
                 }}
-                className="self-start sm:self-auto px-3 py-1.5 rounded-lg bg-primary/15 hover:bg-primary/25 border border-primary/30 text-xs font-semibold text-primary transition-colors flex items-center gap-1"
+                className="self-start sm:self-auto px-3.5 py-2 rounded-xl bg-[#4b8eff]/20 hover:bg-[#4b8eff] border border-[#4b8eff]/40 text-xs font-semibold text-[#adc6ff] hover:text-white transition-all flex items-center gap-1.5 frosted-btn shadow-sm"
               >
                 <Navigation className="w-3.5 h-3.5" />
                 <span>Inspect Pole {fault.poleId}</span>
@@ -98,7 +98,7 @@ export const FaultDetailsModal: React.FC<FaultDetailsModalProps> = ({
             <h4 className="text-xs font-bold uppercase tracking-wider text-[#c1c6d7] mb-1.5">
               Incident Diagnostics
             </h4>
-            <p className="text-sm text-white bg-[#121317]/60 p-3.5 rounded-xl border border-white/10 leading-relaxed">
+            <p className="text-sm text-white bg-black/40 p-4 rounded-2xl border border-white/10 leading-relaxed backdrop-blur-sm">
               {fault.description}
             </p>
           </div>
@@ -112,12 +112,12 @@ export const FaultDetailsModal: React.FC<FaultDetailsModalProps> = ({
               <select
                 value={currentStatus}
                 onChange={(e) => setCurrentStatus(e.target.value as FaultReport['status'])}
-                className="w-full glass-input rounded-xl py-2.5 px-3 text-white text-sm outline-none bg-[#1e1f23]"
+                className="w-full frosted-input rounded-2xl py-2.5 px-3.5 text-white text-sm outline-none cursor-pointer"
               >
-                <option value="Open">Open (Pending)</option>
-                <option value="Dispatched">Dispatched</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Resolved">Resolved</option>
+                <option value="Open" className="bg-[#151a26]">Open (Pending)</option>
+                <option value="Dispatched" className="bg-[#151a26]">Dispatched</option>
+                <option value="In Progress" className="bg-[#151a26]">In Progress</option>
+                <option value="Resolved" className="bg-[#151a26]">Resolved</option>
               </select>
             </div>
 
@@ -128,11 +128,11 @@ export const FaultDetailsModal: React.FC<FaultDetailsModalProps> = ({
               <select
                 value={selectedTech}
                 onChange={(e) => setSelectedTech(e.target.value)}
-                className="w-full glass-input rounded-xl py-2.5 px-3 text-white text-sm outline-none bg-[#1e1f23]"
+                className="w-full frosted-input rounded-2xl py-2.5 px-3.5 text-white text-sm outline-none cursor-pointer"
               >
-                <option value="">Unassigned</option>
+                <option value="" className="bg-[#151a26]">Unassigned</option>
                 {technicians.map((t) => (
-                  <option key={t.id} value={t.name}>
+                  <option key={t.id} value={t.name} className="bg-[#151a26]">
                     {t.name} ({t.status} - {t.assignedZone})
                   </option>
                 ))}
@@ -150,7 +150,7 @@ export const FaultDetailsModal: React.FC<FaultDetailsModalProps> = ({
               value={resolutionNote}
               onChange={(e) => setResolutionNote(e.target.value)}
               placeholder="e.g. Dispatched replacement photocell sensor module..."
-              className="w-full glass-input rounded-xl py-2.5 px-3 text-white text-xs placeholder-[#c1c6d7]/50 resize-none"
+              className="w-full frosted-input rounded-2xl py-2.5 px-3.5 text-white text-xs placeholder-[#c1c6d7]/50 resize-none focus:border-[#4b8eff] focus:ring-1 focus:ring-[#4b8eff]"
             />
           </div>
         </div>
@@ -159,14 +159,14 @@ export const FaultDetailsModal: React.FC<FaultDetailsModalProps> = ({
         <div className="pt-4 border-t border-white/10 flex items-center justify-between gap-3">
           <button
             onClick={onClose}
-            className="px-4 py-2.5 rounded-xl text-xs font-semibold text-[#c1c6d7] hover:text-white hover:bg-white/5 transition-colors"
+            className="px-4 py-2.5 rounded-xl text-xs font-semibold text-[#c1c6d7] hover:text-white hover:bg-white/5 transition-colors frosted-btn"
           >
             Cancel
           </button>
 
           <button
             onClick={handleSaveDispatch}
-            className="liquid-btn px-6 py-2.5 rounded-xl bg-primary hover:bg-[#d8e2ff] text-[#001a41] text-xs font-bold shadow-lg shadow-primary/20 transition-all flex items-center gap-1.5"
+            className="frosted-btn px-6 py-2.5 rounded-2xl bg-[#4b8eff] hover:bg-[#6ba3ff] text-white text-xs font-bold shadow-[0_4px_20px_rgba(75,142,255,0.4)] border border-white/30 transition-all flex items-center gap-1.5"
           >
             <UserCheck className="w-4 h-4" />
             <span>Update Work Order</span>

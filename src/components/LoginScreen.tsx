@@ -65,12 +65,12 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
 
       {/* Center Glass Login Card */}
       <main className="relative z-10 w-full max-w-md">
-        <div className="glass-panel rounded-3xl p-8 sm:p-10 flex flex-col items-center border border-white/20 shadow-2xl relative overflow-hidden">
+        <div className="frosted-panel rounded-3xl p-8 sm:p-10 flex flex-col items-center border border-white/20 shadow-[0_32px_80px_rgba(0,0,0,0.8)] relative overflow-hidden">
           {/* Subtle Top Glow Accent */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#4b8eff] to-transparent opacity-80" />
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#4b8eff] to-transparent opacity-80 shadow-[0_0_12px_rgba(75,142,255,0.8)]" />
 
-          {/* Branding 3D Logo from Screenshot 1 */}
-          <div className="mb-6 w-40 h-40 sm:w-44 sm:h-44 relative flex items-center justify-center">
+          {/* Branding 3D Logo */}
+          <div className="mb-6 w-36 h-36 sm:w-40 sm:h-40 relative flex items-center justify-center">
             <img
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6EMEs-PXxmUewqtvJA2brcy_vtk9HzqDyFgxkUpKbQzHRHYImKEsM489xyzZA0MYF2XItWQczAE12DvSUdZR27Ibse1oJFcJLT9h80DykXhUX7O_oS5mhaf_XmE2WCdLSAKDniJBzcFOPJDOGMwcRW_xqbUzyoB4ctWAdyTHDEUnzM32xzqrTNn58kMS2G_UYRJx7-V77_P_U7IAijuh_mzKD8wTaVRukHsXUHuet8SZuO606v5Fr"
               alt="Hiku 3D Glass Street Light Monitoring Logo"
@@ -80,7 +80,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
 
           {/* Header Text */}
           <div className="text-center mb-6 w-full">
-            <h1 className="text-2xl sm:text-3xl font-bold text-[#d8e2ff] tracking-tight mb-1">
+            <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-1">
               {otpStep ? 'Verify Terminal Code' : 'Welcome Back'}
             </h1>
             <p className="text-sm text-[#c1c6d7]">
@@ -102,11 +102,11 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   placeholder=" "
                   pattern="[0-9+ -]*"
-                  className="peer glass-input w-full rounded-xl text-white font-medium text-base pt-6 pb-2.5 px-4 focus:ring-0 focus:outline-none transition-all placeholder-transparent"
+                  className="peer frosted-input w-full rounded-2xl text-white font-medium text-base pt-6 pb-2.5 px-4 focus:ring-0 focus:outline-none transition-all placeholder-transparent"
                 />
                 <label
                   htmlFor="mobileNumber"
-                  className="absolute left-4 top-4 text-[#8b90a0] text-sm transition-all duration-200 pointer-events-none peer-focus:-translate-y-2.5 peer-focus:text-xs peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2.5 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-primary"
+                  className="absolute left-4 top-4 text-[#8b90a0] text-sm transition-all duration-200 pointer-events-none peer-focus:-translate-y-2.5 peer-focus:text-xs peer-focus:text-[#4b8eff] peer-[:not(:placeholder-shown)]:-translate-y-2.5 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-[#4b8eff]"
                 >
                   Mobile Number
                 </label>
@@ -117,7 +117,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="liquid-btn w-full rounded-full py-3.5 mt-2 flex items-center justify-center gap-2 text-white font-semibold text-base bg-[#005bc1] hover:bg-[#4b8eff] group shadow-lg shadow-[#005bc1]/30 transition-all cursor-pointer"
+                className="frosted-btn w-full rounded-2xl py-3.5 mt-2 flex items-center justify-center gap-2 text-white font-semibold text-base bg-[#4b8eff] hover:bg-[#6ba3ff] group shadow-[0_4px_20px_rgba(75,142,255,0.4)] border border-white/30 transition-all cursor-pointer"
               >
                 {isSubmitting ? (
                   <span className="flex items-center gap-2">
@@ -136,9 +136,9 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
               <button
                 type="button"
                 onClick={triggerDemoLogin}
-                className="w-full py-2.5 rounded-full text-xs text-[#adc6ff] hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center gap-1.5 transition-all mt-1"
+                className="w-full py-2.5 rounded-xl text-xs text-[#adc6ff] hover:text-white bg-white/5 hover:bg-white/10 border border-white/15 flex items-center justify-center gap-1.5 transition-all mt-1 frosted-btn"
               >
-                <Sparkles className="w-3.5 h-3.5 text-primary" />
+                <Sparkles className="w-3.5 h-3.5 text-[#39dcd2]" />
                 <span>Instant Demo Access (Chennai Command Grid)</span>
               </button>
             </form>
@@ -154,7 +154,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
                     maxLength={1}
                     value={digit}
                     onChange={(e) => handleOtpChange(i, e.target.value)}
-                    className="w-13 h-14 text-center font-mono font-bold text-2xl glass-input rounded-xl text-white focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none"
+                    className="w-13 h-14 text-center font-mono font-bold text-2xl frosted-input rounded-2xl text-white focus:border-[#4b8eff] focus:ring-1 focus:ring-[#4b8eff] focus:outline-none"
                     autoFocus={i === 0}
                   />
                 ))}
@@ -165,7 +165,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
                 <button
                   type="button"
                   onClick={() => alert('New authentication token dispatched to telemetry line.')}
-                  className="text-primary hover:underline font-medium"
+                  className="text-[#4b8eff] hover:underline font-medium"
                 >
                   Resend SMS
                 </button>
@@ -174,7 +174,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="liquid-btn w-full rounded-full py-3.5 mt-1 flex items-center justify-center gap-2 text-white font-semibold text-base bg-[#005bc1] hover:bg-[#4b8eff] group shadow-lg shadow-[#005bc1]/30 transition-all cursor-pointer"
+                className="frosted-btn w-full rounded-2xl py-3.5 mt-1 flex items-center justify-center gap-2 text-white font-semibold text-base bg-[#4b8eff] hover:bg-[#6ba3ff] group shadow-[0_4px_20px_rgba(75,142,255,0.4)] border border-white/30 transition-all cursor-pointer"
               >
                 {isSubmitting ? (
                   <span className="flex items-center gap-2">

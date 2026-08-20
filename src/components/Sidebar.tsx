@@ -18,24 +18,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onOpenSupport
 }) => {
   return (
-    <aside className="fixed left-0 top-0 h-full w-64 z-50 bg-[#1e1f23]/85 backdrop-blur-2xl border-r border-white/10 shadow-2xl hidden lg:flex flex-col">
+    <aside className="fixed left-0 top-0 h-full w-64 z-50 bg-[#0e1019]/65 backdrop-blur-3xl border-r border-white/12 shadow-[0_20px_50px_rgba(0,0,0,0.65)] hidden lg:flex flex-col">
       {/* Branding */}
-      <div className="px-6 pt-7 pb-6 flex flex-col items-center border-b border-white/10">
-        <div className="w-14 h-14 rounded-2xl glass-panel flex items-center justify-center mb-3 shadow-lg group hover:scale-105 transition-transform">
-          <Lightbulb className="w-7 h-7 text-primary animate-pulse" />
+      <div className="px-6 pt-7 pb-6 flex flex-col items-center border-b border-white/10 relative">
+        <div className="w-14 h-14 rounded-2xl frosted-card flex items-center justify-center mb-3 shadow-lg group hover:scale-105 transition-transform border border-white/20">
+          <Lightbulb className="w-7 h-7 text-[#4b8eff] drop-shadow-[0_0_12px_rgba(75,142,255,0.8)] animate-pulse" />
         </div>
-        <h1 className="font-semibold text-lg text-primary tracking-tight">Hiku Control</h1>
+        <h1 className="font-semibold text-lg text-[#4b8eff] tracking-tight drop-shadow-[0_0_10px_rgba(75,142,255,0.4)]">Hiku Control</h1>
         <p className="text-xs text-[#c1c6d7] mt-0.5 font-medium tracking-wide">City Grid Alpha</p>
       </div>
 
       {/* Main Navigation Links */}
-      <div className="flex-1 px-4 py-5 space-y-1.5 overflow-y-auto">
+      <div className="flex-1 px-3.5 py-5 space-y-2 overflow-y-auto">
         <button
           onClick={() => onNavigate('dashboard')}
-          className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+          className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-medium transition-all ${
             currentScreen === 'dashboard'
-              ? 'bg-[#4b8eff] text-white shadow-lg shadow-[#4b8eff]/25 font-semibold'
-              : 'text-[#c1c6d7] hover:text-white hover:bg-white/5'
+              ? 'bg-[#4b8eff] text-white shadow-[0_8px_25px_rgba(75,142,255,0.45)] border border-white/30 font-semibold scale-[1.02]'
+              : 'text-[#c1c6d7] hover:text-white hover:bg-white/[0.07] border border-transparent hover:border-white/10'
           }`}
         >
           <div className="flex items-center gap-3">
@@ -46,10 +46,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         <button
           onClick={() => onNavigate('problems')}
-          className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+          className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-medium transition-all ${
             currentScreen === 'problems'
-              ? 'bg-[#4b8eff] text-white shadow-lg shadow-[#4b8eff]/25 font-semibold'
-              : 'text-[#c1c6d7] hover:text-white hover:bg-white/5'
+              ? 'bg-[#4b8eff] text-white shadow-[0_8px_25px_rgba(75,142,255,0.45)] border border-white/30 font-semibold scale-[1.02]'
+              : 'text-[#c1c6d7] hover:text-white hover:bg-white/[0.07] border border-transparent hover:border-white/10'
           }`}
         >
           <div className="flex items-center gap-3">
@@ -57,7 +57,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <span>Problems</span>
           </div>
           {openFaultCount > 0 && (
-            <span className="bg-[#ffb4ab]/25 text-[#ffb4ab] text-xs px-2 py-0.5 rounded-full font-bold">
+            <span className="bg-[#ffb4ab]/25 border border-[#ffb4ab]/40 text-[#ffb4ab] text-xs px-2 py-0.5 rounded-full font-bold shadow-sm">
               {openFaultCount}
             </span>
           )}
@@ -65,10 +65,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         <button
           onClick={() => onNavigate('maintenance')}
-          className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+          className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-medium transition-all ${
             currentScreen === 'maintenance'
-              ? 'bg-[#4b8eff] text-white shadow-lg shadow-[#4b8eff]/25 font-semibold'
-              : 'text-[#c1c6d7] hover:text-white hover:bg-white/5'
+              ? 'bg-[#4b8eff] text-white shadow-[0_8px_25px_rgba(75,142,255,0.45)] border border-white/30 font-semibold scale-[1.02]'
+              : 'text-[#c1c6d7] hover:text-white hover:bg-white/[0.07] border border-transparent hover:border-white/10'
           }`}
         >
           <div className="flex items-center gap-3">
@@ -79,10 +79,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         <button
           onClick={() => onNavigate('analytics')}
-          className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+          className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-medium transition-all ${
             currentScreen === 'analytics'
-              ? 'bg-[#4b8eff] text-white shadow-lg shadow-[#4b8eff]/25 font-semibold'
-              : 'text-[#c1c6d7] hover:text-white hover:bg-white/5'
+              ? 'bg-[#4b8eff] text-white shadow-[0_8px_25px_rgba(75,142,255,0.45)] border border-white/30 font-semibold scale-[1.02]'
+              : 'text-[#c1c6d7] hover:text-white hover:bg-white/[0.07] border border-transparent hover:border-white/10'
           }`}
         >
           <div className="flex items-center gap-3">
@@ -96,10 +96,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
       <div className="p-4 border-t border-white/10">
         <button
           onClick={() => onNavigate('report')}
-          className={`w-full py-3 px-4 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-all shadow-md ${
+          className={`w-full py-3 px-4 rounded-2xl font-semibold text-sm flex items-center justify-center gap-2 transition-all shadow-md frosted-btn ${
             currentScreen === 'report'
-              ? 'bg-[#adc6ff] text-[#001a41] ring-2 ring-white/40'
-              : 'bg-[#adc6ff] text-[#001a41] hover:brightness-110 hover:shadow-lg hover:shadow-[#adc6ff]/20'
+              ? 'bg-[#adc6ff] text-[#001a41] ring-2 ring-white/50 shadow-lg shadow-[#adc6ff]/30'
+              : 'bg-[#adc6ff] text-[#001a41] hover:brightness-110 hover:shadow-lg hover:shadow-[#adc6ff]/25 border border-white/40'
           }`}
         >
           <Plus className="w-4 h-4" />
@@ -108,17 +108,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
       </div>
 
       {/* Footer Support & Logout */}
-      <div className="px-4 pb-6 pt-2 border-t border-white/10 space-y-1 mt-auto text-xs">
+      <div className="px-3.5 pb-6 pt-2 border-t border-white/10 space-y-1 mt-auto text-xs">
         <button
           onClick={onOpenSupport}
-          className="w-full flex items-center gap-3 px-4 py-2.5 text-[#c1c6d7] hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+          className="w-full flex items-center gap-3 px-4 py-2.5 text-[#c1c6d7] hover:text-white hover:bg-white/[0.07] rounded-xl transition-all border border-transparent hover:border-white/10"
         >
           <HelpCircle className="w-4 h-4" />
           <span>Support</span>
         </button>
         <button
           onClick={onLogout}
-          className="w-full flex items-center gap-3 px-4 py-2.5 text-[#ffb4ab] hover:bg-[#ffb4ab]/10 rounded-lg transition-colors"
+          className="w-full flex items-center gap-3 px-4 py-2.5 text-[#ffb4ab] hover:bg-[#ffb4ab]/15 rounded-xl transition-all border border-transparent hover:border-[#ffb4ab]/25"
         >
           <LogOut className="w-4 h-4" />
           <span>Logout</span>
